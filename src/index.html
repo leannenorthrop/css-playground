@@ -37,6 +37,7 @@
 
     <div class="list-group ani-menu">
       <a class="list-group-item active" src="play1.html">Welcome</a>
+      <a class="list-group-item" src="play2.html">Mani</a>
     </div>
 
     <iframe class="ani-stage" src="play1.html">
@@ -55,6 +56,8 @@
       $("a.list-group-item").click(function(event) {
         event.stopPropagation();
         $(".ani-stage").attr("src", $(this).attr("src"));
+        $("a.list-group-item").filter(".active").removeClass("active");
+        $(this).addClass("active");
       });
     </script>      
   </body>
