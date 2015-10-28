@@ -1,9 +1,10 @@
 /* Your styles (and Sass) start here */
 /*** Example styles ***/
-body {
-  background: #36a1d9; }
+.ani {
+  background: #36a1d9;
+  min-height: 590px; }
 
-h1 {
+.ani h1 {
   -webkit-transition: all 3s ease-out;
           transition: all 3s ease-out;
   -webkit-animation: pulsate 8s ease-out infinite;
@@ -23,7 +24,7 @@ h1 {
   text-align: center;
   text-transform: uppercase; }
 
-h1:hover {
+.ani h1:hover {
   color: #5cefaf; }
 
 /*** Keyframes - used with the "animation" property in the h1 ***/
@@ -62,5 +63,5 @@ h1:hover {
 
 /*** Media queries for adjusting to different screen sizes ***/
 @media only screen and (max-width: 600px) {
-  h1 {
+  .ani h1 {
     font-size: 2em; } }
