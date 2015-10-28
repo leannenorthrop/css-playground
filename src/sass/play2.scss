@@ -3,23 +3,22 @@ body {
   color: white;
 }
 
-.mantra {
-  color: transparent;
-  font-size: 8rem;
-  font-family:  'Kokonor';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -4rem;
-  margin-left: -14rem;
+.holder {
+  height: 45em;
+  position: relative;
 }
 
-.mantra:hover {
-  -webkit-transform: perspective(500px) rotateY(20deg);
+.mantra {
+  position: absolute;              
+  left: 50%;
+  top: 50%;                        
+  transform: translate(-50%, -50%); 
+  color: transparent;
+  font-size: 10rem;
+  font-family: 'Kokonor','Microsoft Himalaya';
 }
 
 .mantra > span {
-  /*outline: 1px solid blue;*/
   position: relative;
   float: left;
   display: inline-block;
@@ -41,20 +40,26 @@ body {
   text-shadow: 0 0 0.13em rgba(125,255,255,0.6); 
 }
 
+.me {
+}
+
+.me span {
+  display: block; 
+}
+
 .me-m, .me-e {
-  position: absolute;
   text-shadow: 0 0 0.13em rgba(255,0,0,0.6);
+  position: absolute;
 }
 
 .me-m {
-  left: 55%;
-  top: 40%;
   font-size: 0.75em;
+  top: 50%;
 }
 
 .me-e {
-  position: absolute;
-  left: 95%;
+  left: -50%;
+  top: -5%;
 }
 
 .hung {
@@ -66,39 +71,35 @@ span.light {
   position: absolute;
   float: left;
   display: inline-block;
-  width: 2em;
-  height: 2em;
-  top: -4rem;
+  width: 300%;
+  height: 150%;
+  top: -45%;
+  left: -60%;
 }
 
 .om > .light {
-  left: -5.4rem;
   background: -webkit-radial-gradient(circle, rgba(255,255,255,0.5), rgba(255,255,255,0.25) 2%,rgba(255,255,255,0.1) 5%,rgba(255,255,255,0) 70%,rgba(255,255,255,0)) no-repeat;  
 }
 
 .ma > .light {
-  left: -5.4rem;
   background: -webkit-radial-gradient(circle, rgba(0,255,0,0.5), rgba(0,255,0,0.25) 2%, rgba(0,255,0,0.16) 5%, rgba(0,255,0,0) 70%,rgba(0,255,0,0)) no-repeat; 
 }
 
 .ni > .light {
-  left: -5.4rem;   
   background: -webkit-radial-gradient(circle, rgba(255,255,0,0.5), rgba(255,255,0,0.25) 2%,rgba(255,255,0,0.1) 5%, rgba(255,255,0,0) 70%,rgba(255,255,0,0)) no-repeat; 
 }
 
-.pa > .light {
-  left: -3.5rem;  
-  background: -webkit-radial-gradient(circle, rgba(125,255,255,0.5), rgba(125,255,255,0.25) 2%,rgba(125,255,255,0.1) 5%, rgba(125,255,255,0) 70%,rgba(125,255,255,0)) no-repeat;  
+.pa > .light { 
+  background: -webkit-radial-gradient(circle, rgba(125,255,255,0.5), rgba(125,255,255,0.25) 2%,rgba(125,255,255,0.2) 5%, rgba(125,255,255,0) 70%,rgba(125,255,255,0)) no-repeat;  
 }
 
 .me-m > .light {
-  top: -1.5rem !important;
-  left: -4rem;    
+  left: -95% !important;
+  top: -15% !important;  
   background: -webkit-radial-gradient(circle, rgba(255,0,0,0.5), rgba(255,0,0,0.25) 2%,rgba(255,0,0,0) 50%,rgba(255,0,0,0)) no-repeat;     
 }
 
-.hung > .light {
-  left: -3.5rem;     
+.hung > .light {    
   background: -webkit-radial-gradient(circle, rgba(0,0,255,0.5), rgba(0,0,255,0.25) 2%,rgba(0,0,255,0.2) 5%, rgba(0,0,255,0) 70%,rgba(0,0,255,0)) no-repeat; 
 }
 
