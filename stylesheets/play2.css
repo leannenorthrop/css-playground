@@ -14,7 +14,7 @@ body {
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   color: transparent;
-  font-size: 10rem;
+  font-size: 8rem;
   font-family: 'Kokonor','Microsoft Himalaya'; }
 
 .mantra > span {
@@ -80,7 +80,7 @@ span.light {
   background: -webkit-radial-gradient(circle, rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.25) 2%, rgba(255, 0, 0, 0) 50%, rgba(255, 0, 0, 0)) no-repeat; }
 
 .hung > .light {
-  background: -webkit-radial-gradient(circle, rgba(0, 0, 255, 0.5), rgba(0, 0, 255, 0.25) 2%, rgba(0, 0, 255, 0.2) 5%, rgba(0, 0, 255, 0) 70%, rgba(0, 0, 255, 0)) no-repeat; }
+  background: -webkit-radial-gradient(circle, rgba(0, 0, 255, 0.5), rgba(0, 0, 255, 0.25) 2%, rgba(0, 0, 255, 0.1) 5%, rgba(0, 0, 255, 0) 70%, rgba(0, 0, 255, 0)) no-repeat; }
 
 body {
   background-color: #999999;
