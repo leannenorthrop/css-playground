@@ -35,24 +35,12 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="list-group ani-menu">
+      <a class="list-group-item active" src="play1.html">Welcome</a>
+    </div>
 
-      <div class="row">
-        <div class="ani col-md-12">
-          <h1>Breathe</h1>
-        </div>
-      </div><!-- /.row -->
-
-    </div><!-- /.container -->
-
-    <footer class="blog-footer">
-      <p>Blog by <a href="https://twitter.com/flowerdew">Leanne Northrop</a> hosted on GitHub and built using <a href="http://getbootstrap.com">Bootstrap's</a> <a href="http://getbootstrap.com/examples/blog/">Blog Template</a>.</p>
-      <p>Many thanks to Minddust for great <a href="http://www.minddust.com/post/tags-and-categories-on-github-pages/">tutorial</a> on using tags on GitHub Pages.</p>
-      <p>
-        <a href="#">Back to top</a>
-      </p>
-    </footer>
-
+    <iframe class="ani-stage" src="play1.html">
+    </iframe>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -62,6 +50,12 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://leannenorthrop.github.io/javascripts/ie10-viewport-bug-workaround.js"></script>
     <script src="http://leannenorthrop.github.io/javascripts/highlight.pack.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>      
+    <script>
+      hljs.initHighlightingOnLoad();
+      $("a.list-group-item").click(function(event) {
+        event.stopPropagation();
+        $(".ani-stage").attr("src", $(this).attr("src"));
+      });
+    </script>      
   </body>
 </html>
