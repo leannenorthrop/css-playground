@@ -1,0 +1,69 @@
+body {
+  height: 100%;
+  width: 100%;
+}
+
+div {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.bars, .boxes {
+  position: absolute;
+  border: 1px solid #3e75ab;
+  height: 100vmin;
+  width: 100vmin;
+  left: 50%;
+  top: 50%;
+  margin-left: -50vmin;
+  margin-top: -50vmin;
+}
+
+.bars > div {
+  height: 49.9%;
+  width: 49.9%;
+  float: left;
+}
+
+.bars>div:nth-of-type(1) {
+  border-bottom: 1px solid #222222;
+}
+
+.bars>div:nth-of-type(2) {
+  border-bottom: 1px solid #222222;
+  border-left: 1px solid #222222;
+}
+.bars>div:nth-of-type(4) {
+  border-left: 1px solid #222222;
+}
+
+.flex{
+  position: absolute;
+  height: 100vmin;
+  width: 100vmin;
+  left: 50%;
+  top: 50%;
+  margin-left: -50vmin;
+  margin-top: -50vmin;
+  display: flex;
+  flex-flow: row;
+  align-items: flex-end; /* This centers the items vertically. */
+  justify-content: space-between;
+}
+.flex > *{
+min-width: 100px;
+min-height: 100px;
+}
+header{
+background: rgba(200, 200, 200, 1);
+}
+article{
+background: rgba(200, 200, 200, .8);
+}
+aside{
+background: rgba(200, 200, 200, .6);
+}
+footer{
+background: rgba(200, 200, 200, .4);
+}

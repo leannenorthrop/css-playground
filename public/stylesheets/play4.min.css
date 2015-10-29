@@ -1,0 +1,74 @@
+body {
+  height: 100%;
+  width: 100%; }
+
+div {
+  margin: 0;
+  padding: 0;
+  border: 0; }
+
+.bars, .boxes {
+  position: absolute;
+  border: 1px solid #3e75ab;
+  height: 100vmin;
+  width: 100vmin;
+  left: 50%;
+  top: 50%;
+  margin-left: -50vmin;
+  margin-top: -50vmin; }
+
+.bars > div {
+  height: 49.9%;
+  width: 49.9%;
+  float: left; }
+
+.bars > div:nth-of-type(1) {
+  border-bottom: 1px solid #222222; }
+
+.bars > div:nth-of-type(2) {
+  border-bottom: 1px solid #222222;
+  border-left: 1px solid #222222; }
+
+.bars > div:nth-of-type(4) {
+  border-left: 1px solid #222222; }
+
+.flex {
+  position: absolute;
+  height: 100vmin;
+  width: 100vmin;
+  left: 50%;
+  top: 50%;
+  margin-left: -50vmin;
+  margin-top: -50vmin;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  /* This centers the items vertically. */
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between; }
+
+.flex > * {
+  min-width: 100px;
+  min-height: 100px; }
+
+header {
+  background: #c8c8c8; }
+
+article {
+  background: rgba(200, 200, 200, 0.8); }
+
+aside {
+  background: rgba(200, 200, 200, 0.6); }
+
+footer {
+  background: rgba(200, 200, 200, 0.4); }
