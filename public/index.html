@@ -2,20 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="Blog on coding">
+    <meta name="description" content="Gathering Understand: a collection of blog posts on i.t. development, standard tibetan, and css.">
     <meta name="author" content="Leanne Northrop">
-    <link rel="icon" href="{{site.url}}/images/favicon.ico">
+    <link rel="icon" href="http://leannenorthrop.github.io/images/favicon.ico">
 
-    <title>CSS Playground</title>
+    <title>Gathering Understanding: CSS Stuff</title>
 
     <link rel="stylesheet" type="text/css" href="http://leannenorthrop.github.io/stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="http://leannenorthrop.github.io/stylesheets/print.css" media="print">
-    <link class="codestyle" rel="stylesheet" href="http://leannenorthrop.github.io/stylesheets/monokai_sublime.css">
-    <link rel="stylesheet" href="stylesheets/screen.css">
+    <link rel="stylesheet" type="text/css" href="http://leannenorthrop.github.io/stylesheets/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/screen.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -25,33 +24,95 @@
   </head>
 
   <body>
-    <div class="blog-masthead">
-      <div class="container">
-        <nav class="blog-nav">
-          <a class="blog-nav-item" href="/">Home</a>
-          <a class="blog-nav-item" href="/blog">Blog</a>
-          <a class="blog-nav-item active" href="/css-playground">CSS Stuff</a>
-        </nav>
+    <h1 class="label" style="position: absolute; top: 40px;margin:0;padding:0 0 0 10px;color:black;">Gathering Understanding</h1>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-toolbar">
+            <span class="sr-only">View Menu</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="https://avatars0.githubusercontent.com/u/521090?v=3&s=460" width="30px" height="30px" class="img-circle" alt="Picture of Me, Leanne Northrop"></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-toolbar">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog">Development Blog</a></li>
+            <li class="active"><a href="/css-playground">CSS Stuff<span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <ol class="breadcrumb">
+      <li><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li>CSS Stuff</li>
+    </ol>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-3">
+          <div class="list-group ani-menu">
+            <a class="list-group-item active" src="play1.html">
+              <h4 class="list-group-item-heading">Welcome</h4>
+              <p class="list-group-item-text">...</p>
+            </a>
+<!--             <a class="list-group-item" src="play2.html">
+              <h4 class="list-group-item-heading">Mani</h4>
+              <p class="list-group-item-text">Tibetan mantra with box shadows</p>
+            </a> -->
+            <a class="list-group-item" src="play3.html">
+              <h4 class="list-group-item-heading">Flexbox</h4>
+              <p class="list-group-item-text">Learning flexbox...</p>
+            </a>      
+          </div>
+        </div>
+        <div class="col-xs-9">
+          <iframe class="ani-stage" src="play1.html">
+          </iframe>
+        </div>
       </div>
     </div>
 
-    <div class="list-group ani-menu">
-      <a class="list-group-item active" src="play1.html">
-        <h4 class="list-group-item-heading">Welcome</h4>
-        <p class="list-group-item-text">...</p>
-      </a>
-      <a class="list-group-item" src="play2.html">
-        <h4 class="list-group-item-heading">Mani</h4>
-        <p class="list-group-item-text">Tibetan mantra with box shadows</p>
-      </a>
-      <a class="list-group-item" src="play3.html">
-        <h4 class="list-group-item-heading">Flexbox</h4>
-        <p class="list-group-item-text">Learning flexbox...</p>
-      </a>      
-    </div>
-
-    <iframe class="ani-stage" src="play1.html">
-    </iframe>
+    <footer class="row-footer">
+        <div class="container">
+            <div class="row">             
+                <div class="col-xs-6 col-sm-3">
+                    <h5>About</h5>
+                    <p>Blog by me, <a href="https://twitter.com/flowerdew">Leanne Northrop</a> hosted on my <a href="https://github.com/leannenorthrop">GitHub</a> account and built using <a href="http://getbootstrap.com">Bootstrap 3</a>, JQuery and Highlight.</p>
+                    <p>Many thanks to Minddust for great <a href="http://www.minddust.com/post/tags-and-categories-on-github-pages/">tutorial</a> on using tags on GitHub Pages.</p>
+                </div>
+                <div class="col-xs-6 col-sm-5">
+                    <h5>My Address</h5>
+                    <address>
+                      Noth Shields &amp; Surrey<br>
+                      United Kingdom<br>
+                      <i class="fa fa-envelope"></i>: <a href="mailto:lavender.dawn@gmail.com">lavender.dawn@gmail.com</a>
+                   </address>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <h5>Elsewhere</h5>
+                    <div class="nav navbar-nav">
+                        <a class="btn btn-social-icon btn-google-plus" href="https://plus.google.com/118141190119843633496/posts">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                        <a class="btn btn-social-icon btn-linkedin" href="https://www.linkedin.com/profile/view?id=AAkAAAe70qIBlTDA0luIQJbcZrqYHG6qjGoRMhk"><i class="fa fa-linkedin"></i></a>
+                        <a class="btn btn-social-icon btn-twitter" href="http://twitter.com/flowerdew"><i class="fa fa-twitter"></i></a>
+                        <a class="btn btn-social-icon" href="mailto:lavender.dawn@gmail.com"><i class="fa fa-envelope-o"></i></a>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <p style="padding:10px;"></p>
+                    <p align="center">© Copyright 2015 Leanne Northrop</p>
+                    <p align="center"><a href="#">Back to top</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+  
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -60,9 +121,7 @@
     <script src="http://leannenorthrop.github.io/javascripts/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://leannenorthrop.github.io/javascripts/ie10-viewport-bug-workaround.js"></script>
-    <script src="http://leannenorthrop.github.io/javascripts/highlight.pack.js"></script>
     <script>
-      hljs.initHighlightingOnLoad();
       $("a.list-group-item").click(function(event) {
         event.stopPropagation();
         $(".ani-stage").attr("src", $(this).attr("src"));
