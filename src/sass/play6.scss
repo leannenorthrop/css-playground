@@ -1,0 +1,264 @@
+body {
+background-color:white;
+background-image: linear-gradient(rgba(50,50,50,0.09) 2px, transparent 2px),
+linear-gradient(90deg, rgba(50,50,50,0.09) 2px, transparent 2px),
+linear-gradient(rgba(50,50,50,0.07) 1px, transparent 1px),
+linear-gradient(90deg, rgba(50,50,50,0.07) 1px, transparent 1px);
+background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
+}
+
+body img {
+  position: fixed;
+  top: 315px;
+  left: -10px;
+}
+
+.animate {
+  animation: bounce 2s steps(24) 1 normal;
+  animation-fill-mode: forwards;
+}
+
+.circle {
+  position: absolute;
+  width: 57px;
+  height: 57px;
+
+  background-color: transparent;
+  border: 1px solid red;
+  border-radius: 50%;
+  translate: -50% -50%;
+
+  background-image: linear-gradient(red 1px, transparent 1px),
+  linear-gradient(90deg, red 1px, transparent 1px);
+  background-size:100px 100px, 100px 100px;
+  background-position:28px 28px, 28px 28px;
+
+  /* start */
+  top: -50px;
+  left: -50px;
+}
+
+.b {
+  border-color: blue;
+}
+
+.pos1 {
+  top: 450px;
+  left: -30px;
+  opacity: 0.3;
+}
+
+.pos2 {
+  top: 460px;
+  left: -24px;
+  opacity: 0.3;
+}
+
+.pos3 {
+  top: 470px;
+  left: -19px;
+  opacity: 0.3;
+}
+
+.pos4 {
+  top: 490px;
+  left: -11px;
+  opacity: 0.3;
+}
+
+.pos5 {
+  top: 560px;
+  left: 13px;
+  opacity: 0.3;
+}
+
+.pos6 {
+  top: 630px;
+  left: 30px;
+  opacity: 0.3;
+}
+
+.pos7 {
+  top: 700px;
+  left: 46px;
+  opacity: 0.3;
+}
+
+.pos8 {
+  top: 740px;
+  left: 55px;
+  opacity: 0.3;
+}
+
+.pos9 {
+  top: 730px;
+  left: 63px;
+  opacity: 0.3;
+}
+
+.pos10 {
+  top: 668px;
+  left: 127px;
+  opacity: 0.3;
+}
+
+.pos11 {
+  top: 643px;
+  left: 150px;
+  opacity: 0.3;
+}
+
+.pos12 {
+  top: 625px;
+  left: 174px;
+  opacity: 0.3;
+}
+
+.pos13 {
+  top: 620px;
+  left: 185px;
+  opacity: 0.3;
+}
+
+.pos14 {
+  top: 617px;
+  left: 200px;
+  opacity: 1;
+}
+
+.pos15 {
+  top: 625px;
+  left: 218px;
+  opacity: 0.3;
+}
+
+
+@keyframes bounce {
+  0%,3% {
+  top: 450px;
+  left: -30px;
+  }
+  3%,6%{
+  top: 460px;
+  left: -24px;
+  }
+  6%,9%{
+  top: 470px;
+  left: -19px;
+  }
+  9%,12%{
+  top: 490px;
+  left: -11px;
+  }
+  12%,15%{
+  top: 560px;
+  left: 13px;
+  }
+  15%,18%{
+  top: 630px;
+  left: 30px;
+  }
+  18%,19%{
+  top: 700px;
+  left: 46px;
+  }
+  19%,20%{
+  top: 740px;
+  left: 55px;
+  } 
+  20%,27%{
+  top: 730px;
+  left: 63px;
+  }
+  27%,30%{
+  top: 668px;
+  left: 127px;
+  }
+  30%,33%{
+  top: 643px;
+  left: 150px;
+  }
+  33%,36%{
+  top: 625px;
+  left: 174px;
+  }
+  36%,39%{
+  top: 620px;
+  left: 185px;
+  }
+  39%,42%{
+  top: 617px;
+  left: 200px;
+  }
+  42%,100%{
+  top: 625px;
+  left: 218px;
+  }
+}
+
+/* http://cubic-bezier.com/?mc_cid=5eda7eb91e&mc_eid=2955a51509#.75,.03,0,.45*/
+/*
+.d {
+  position: relative;
+  overflow: hidden;
+  font-size: 72px;
+  color: green;  
+}
+
+span {
+  transition: transform 0.4s cubic-bezier(.75,.03,0,.45);
+}
+
+.text1 {
+  display: inline-block;
+  position: absolute;
+  transform: translateX(20);
+}
+
+.text2 {
+  display: inline-block;
+  position: absolute;
+  transform: translateX(-20em);
+}
+
+.d:hover .text1 {
+  transform: translateX(20em);
+}
+
+.d:hover .text2 {
+  transform: translateX(0em);
+}
+
+
+.square {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 0; 
+  border-color: blue;
+
+  transition: all 1s 0.2s cubic-bezier(.75,.03,0,.45);
+}
+
+.triangle {
+  position: absolute;
+  top: 250px;
+  left: 500px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 100px 100px 100px;
+  border-color: transparent transparent red transparent;  
+}
+//circle
+.square:hover {
+  background-color: blue;
+  border-style: solid;
+  border-width: 2px;
+  border-color: red;
+  border-radius: 50%; 
+}*/
