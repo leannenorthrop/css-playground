@@ -1,3 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1">
+  <title>24 Frames ~ Animation Helper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="stylesheets/twentyfour.css">
+</head>
+<body>
+    <form>
+        <label for="genFrames">Generate</label> 
+        <input type="number" name="genFrames" value="100" id="frameCount">
+        with class
+        <input type="text" value="" id="frameClass">
+        with name
+        <input type="text" value="" id="frameName">
+        <button type="button" onclick="window.tfFrames.generateFrames();" action="#">Go &raquo;</button>
+        <button type="button" onclick="window.tfFrames.generateKeyframes();" action="#">Generate Keyframes &raquo;</button>
+    </form>
+
+    <script type="text/javascript">
 window.tfFrames = {
     generateFrames: function() {
         var body = document.getElementsByTagName("body")[0];
@@ -45,22 +67,20 @@ window.tfFrames = {
         var frameName = document.getElementById("frameName").value; 
         var outputElement = document.getElementById("css");
         var animationName = "hello";
-        var animationCount = 0;
-        var letters = ['a','b','c','d','e','f','g'];
-        var keyframes = "@keyframes " + animationName + letters[animationCount] + " {\n";
+        var animationCount = 1;
+        var keyframes = "@keyframes " + animationName + animationCount + " {\n";
         var animations = "";
         var last = 0;
         var stepCount = 1;
-        
         for (; i < numberOfFrames; ) {
             var frame = this.getFrame(frameCount,frameName);
             if (frameCount % 25 == 0) {
-                animations += animationName + letters[animationCount] + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
                 animationCount++;
                 stepCount = 1;
                 last = 0;
                 keyframes += "}\n\n";
-                keyframes += "@keyframes " + animationName + letters[animationCount] + " {\n";
+                keyframes += "@keyframes " + animationName + animationCount + " {\n";
+                animations += animationName + animationCount + " 1s step(24) 1 " + (animationCount) + "s normal, ";
             }
             var next = stepCount * 4.16;
             if (next > 99) {
@@ -71,7 +91,7 @@ window.tfFrames = {
             var styles = this.getStyle(".frame."+frameName + frameCount);
             if (styles != undefined) {
                 keyframes += styles;    
-            } 
+            }
             keyframes += "\n  }\n";
             last = next;
 
@@ -98,79 +118,176 @@ window.tfFrames = {
             }
         }
         return found;
-    },
-    toggle: function() {
-        var tbtn = document.getElementById("tbtn");
-        var form = document.getElementsByTagName("form")[0];
-        var textarea = document.getElementsByTagName("textarea")[0];
-        if (form.getAttribute("style") ==="display:none;") {
-            form.setAttribute("style", "");
-            textarea.setAttribute("style","");
-        } else {
-            form.setAttribute("style", "display:none;");
-            textarea.setAttribute("style","display:none;");
-        }
-    },
-    init: function() {
-        var body = document.getElementsByTagName("body")[0];
-
-        var tBtn = document.createElement("button");
-        tBtn.setAttribute("type", "button");
-        tBtn.setAttribute("id", "tbtn");
-        tBtn.setAttribute("onclick", "window.tfFrames.toggle();");
-        tBtn.appendChild(document.createTextNode("Hide >"));
-        body.appendChild(tBtn);
-
-        var form = document.createElement("form");
-        var label = document.createElement("label");
-        label.appendChild(document.createTextNode("Generate: "));
-        form.appendChild(label);
-
-        var number = document.createElement("input");
-        number.setAttribute("type", "number");
-        number.setAttribute("name", "genFrames");
-        number.setAttribute("value", "50");
-        number.setAttribute("id", "frameCount");
-        form.appendChild(number);
-
-        form.appendChild(document.createTextNode(" with class "));
-        
-        var clazz = document.createElement("input");
-        clazz.setAttribute("type", "text");
-        clazz.setAttribute("value", "");
-        clazz.setAttribute("id", "frameClass");
-        form.appendChild(clazz);
-
-        form.appendChild(document.createTextNode(" with name "));
-
-        var fName = document.createElement("input");
-        fName.setAttribute("type", "text");
-        fName.setAttribute("value", "");
-        fName.setAttribute("id", "frameName");
-        form.appendChild(fName);
-
-        var goBtn = document.createElement("button");
-        goBtn.setAttribute("type", "button");
-        goBtn.setAttribute("onclick", "window.tfFrames.generateFrames();");
-        goBtn.appendChild(document.createTextNode("Go >"));
-        form.appendChild(goBtn);
-
-        var genBtn = document.createElement("button");
-        genBtn.setAttribute("type", "button");
-        genBtn.setAttribute("onclick", "window.tfFrames.generateKeyframes();");
-        genBtn.appendChild(document.createTextNode("Generate Keyframes >"));
-        form.appendChild(genBtn);
-
-        body.appendChild(form);
-
-        var outputElement = document.createElement("textarea");
-        outputElement.setAttribute("rows", "10");
-        outputElement.setAttribute("cols", "100");
-        outputElement.setAttribute("id", "css");
-        body.appendChild(outputElement);
-
-        var framesDiv = document.createElement("div");
-        framesDiv.setAttribute("class", "frames");
-        body.appendChild(framesDiv);
-    } 
+    }    
 }
+    </script>
+    <div class="frames">
+    </div>
+    <style type="text/css" id="frame-styles">
+.frame.pos1 {
+  top: 450px;
+  left: -30px;
+  opacity: 0.3;
+}
+
+.frame.pos2 {
+  top: 460px;
+  left: -24px;
+  opacity: 0.3;
+}
+
+.frame.pos3 {
+  top: 470px;
+  left: -19px;
+  opacity: 0.3;
+}
+
+.frame.pos4 {
+  top: 490px;
+  left: -11px;
+  opacity: 0.3;
+}
+
+.frame.pos5 {
+  top: 560px;
+  left: 13px;
+  opacity: 0.3;
+}
+
+.frame.pos6 {
+  top: 630px;
+  left: 30px;
+  opacity: 0.3;
+}
+
+.frame.pos7 {
+  top: 700px;
+  left: 46px;
+  opacity: 0.3;
+}
+
+.frame.pos8 {
+  top: 740px;
+  left: 55px;
+  opacity: 0.3;
+}
+
+.frame.pos9 {
+  top: 730px;
+  left: 63px;
+  opacity: 0.3;
+}
+
+.frame.pos10 {
+  top: 668px;
+  left: 127px;
+  opacity: 0.3;
+}
+
+.frame.pos11 {
+  top: 643px;
+  left: 150px;
+  opacity: 0.3;
+}
+
+.frame.pos12 {
+  top: 625px;
+  left: 174px;
+  opacity: 0.3;
+}
+
+.frame.pos13 {
+  top: 620px;
+  left: 185px;
+  opacity: 0.3;
+}
+
+.frame.pos14 {
+  top: 617px;
+  left: 200px;
+  opacity: 1;
+}
+
+.frame.pos15 {
+  top: 625px;
+  left: 218px;
+  opacity: 0.3;
+}
+
+.frame.pos16 {
+  top: 490px;
+  left: -11px;
+  opacity: 0.3;
+}
+
+.frame.pos17 {
+  top: 560px;
+  left: 13px;
+  opacity: 0.3;
+}
+
+.frame.pos18 {
+  top: 630px;
+  left: 30px;
+  opacity: 0.3;
+}
+
+.frame.pos19 {
+  top: 700px;
+  left: 46px;
+  opacity: 0.3;
+}
+
+.frame.pos20 {
+  top: 740px;
+  left: 55px;
+  opacity: 0.3;
+}
+
+.frame.pos21 {
+  top: 730px;
+  left: 63px;
+  opacity: 0.3;
+}
+
+.frame.pos22 {
+  top: 668px;
+  left: 127px;
+  opacity: 0.3;
+}
+
+.frame.pos23 {
+  top: 643px;
+  left: 150px;
+  opacity: 0.3;
+}
+
+.frame.pos24 {
+  top: 625px;
+  left: 174px;
+  opacity: 0.3;
+}
+
+.frame.pos25 {
+  top: 620px;
+  left: 185px;
+  opacity: 0.3;
+}
+
+.frame.pos26 {
+  top: 617px;
+  left: 200px;
+  opacity: 1;
+}
+
+.frame.pos27 {
+  top: 625px;
+  left: 218px;
+  opacity: 0.3;
+}
+    </style>
+    <style type="text/css" id="page-animation">
+    </style>
+    <textarea rows="10" cols="100" id="css"></textarea>
+</body>
+</html>

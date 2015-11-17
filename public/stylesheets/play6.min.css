@@ -11,8 +11,8 @@ body img {
   left: -10px; }
 
 .animate {
-  -webkit-animation: bounce 2s steps(24) 1 normal;
-          animation: bounce 2s steps(24) 1 normal;
+  -webkit-animation: bounce 1s steps(24) 1 normal;
+          animation: bounce 1s steps(24) 1 normal;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards; }
 
