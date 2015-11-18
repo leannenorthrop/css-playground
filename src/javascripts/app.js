@@ -67,23 +67,23 @@ window.tfFrames = {
         var numberOfFrames = document.getElementById("frameCount").value;
         var frameName = document.getElementById("frameName").value; 
         var outputElement = document.getElementById("css");
-        var animationName = "hello";
+        var animationName = frameName;
         var animationCount = 0;
         var letters = ['a','b','c','d','e','f','g'];
-        var keyframes = "@keyframes " + animationName + letters[animationCount] + " {\n";
-        var animations = animationName + letters[animationCount] + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
+        var keyframes = "@keyframes " + animationName + "_" + animationCount + " {\n";
+        var animations = animationName + "_" + animationCount + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
         var last = 0;
         var stepCount = 1;
         var frameData = "/* Frame Data: \n";
         for (; i < numberOfFrames; ) {
             var frame = this.getFrame(frameCount,frameName);
             if (frameCount % 25 == 0) {
-                animations += animationName + letters[animationCount] + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
+                animations += animationName + "_" + animationCount + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
                 animationCount++;
                 stepCount = 1;
                 last = 0;
                 keyframes += "}\n\n";
-                keyframes += "@keyframes " + animationName + letters[animationCount] + " {\n";
+                keyframes += "@keyframes " + animationName + "_" + animationCount + " {\n";
             }
             var next = stepCount * 4.16;
             if (next > 99) {
