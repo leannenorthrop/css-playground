@@ -61,12 +61,11 @@ window.tfFrames = {
         }
         return found;
     },
-    generateKeyframes: function() {
+    _keyFrames: function(addComments) {
         var i = 0;
         var frameCount = 1;
         var numberOfFrames = document.getElementById("frameCount").value;
         var frameName = document.getElementById("frameName").value; 
-        var outputElement = document.getElementById("css");
         var animationName = frameName;
         var animationCount = 0;
         var letters = ['a','b','c','d','e','f','g'];
@@ -89,27 +88,40 @@ window.tfFrames = {
             if (next > 99) {
                 next = 100;
             }
-            keyframes += "  " + last + "%," + next + "% {\n";
-            keyframes += "    /* frame " + (i+1) + " rules here */";
+            keyframes += "  " + last + "%," + next + "% {";
+
+            if (addComments) {
+                keyframes += "    /* frame " + (i+1) + " rules here */";
+            }
+
             var styles = this.getStyle(frameCount,frameName);
             if (styles != undefined) {
                 keyframes += styles;  
                 frameData += frameName + "|" + frameCount + "|" + styles + "\n";  
             } 
-            keyframes += "\n  }\n";
+            keyframes += "}\n";
             last = next;
 
             stepCount++;
             frameCount++;
             i++;
         }
+        if (frameCount % 25 != 0) {
+            keyframes += "}\n\n"; 
+        }
+        return {'animations': animations.substr(0, animations.length-2), 'keyframes': keyframes, 'frameData': frameData};
+    },
+    generateKeyframes: function() {
+        var css = this._keyFrames(true);
+        var outputElement = document.getElementById("css");
+        var frameName = document.getElementById("frameName").value; 
         outputElement.value = "";
-        outputElement.value = outputElement.value + "\n\n.animate {\n";
-        outputElement.value = outputElement.value + "  animation: " + animations.substr(0, animations.length-2) + ";\n";
+        outputElement.value = outputElement.value + "." + frameName + ".animate {\n";
+        outputElement.value = outputElement.value + "  animation: " + css.animations + ";\n";
         outputElement.value = outputElement.value + "  animation-fill-mode: forwards;\n}\n\n";    
 
-        outputElement.value = outputElement.value + keyframes;
-        outputElement.value = outputElement.value + frameData + "*/\n";
+        outputElement.value = outputElement.value + css.keyframes;
+        outputElement.value = outputElement.value + css.frameData + "*/\n";
     },
     getStyle: function(frameNumber, name) {
         var frame = this.getFrame(frameNumber, name);
@@ -151,15 +163,58 @@ window.tfFrames = {
             tbtn.innerHTML = "Show >";
         }
     },
+    test: function() {
+        var name = document.getElementById("frameName").value;
+        var e1 = document.getElementById(name+"Test");
+        if (e1 != undefined) {
+            e1.parentNode.removeChild(e1);
+        }
+
+        var s1 = document.getElementById("animationtest");
+        if (s1 != undefined) {
+            s1.parentNode.removeChild(s1);
+        }
+
+        var frameClass = document.getElementById("frameClass").value;  
+        var frame = this.getFrame(1, name);
+        var test = document.createElement("span");
+        test.setAttribute("id", name+"Test");
+        var body = document.getElementsByTagName("body")[0];
+        body.appendChild(test);
+
+        var stylesheet = document.createElement("style");
+        stylesheet.setAttribute("id", "animationtest");
+        stylesheet.appendChild(document.createTextNode(""));
+        body.appendChild(stylesheet);
+
+        var css = this._keyFrames(false);
+        stylesheet.sheet.insertRule(css.keyframes, 0);
+        stylesheet.sheet.insertRule("." + name + ".animate {animation: " + css.animations + ";animation-fill-mode: forwards;}", 1);
+        console.log(stylesheet.sheet.cssRules);
+        test.className = frameClass + " " + name + " animate";
+
+        var form = document.getElementsByTagName("form")[0];
+        if (form.getAttribute("style") ==="display:none;") {
+        } else {
+            this.toggle();    
+        }
+    },
     init: function() {
         var body = document.getElementsByTagName("body")[0];
 
-        var tBtn = document.createElement("button");
-        tBtn.setAttribute("type", "button");
-        tBtn.setAttribute("id", "tbtn");
-        tBtn.setAttribute("onclick", "window.tfFrames.toggle();");
-        tBtn.appendChild(document.createTextNode("Hide >"));
-        body.appendChild(tBtn);
+        var toggleBtn = document.createElement("button");
+        toggleBtn.setAttribute("type", "button");
+        toggleBtn.setAttribute("id", "tbtn");
+        toggleBtn.setAttribute("onclick", "window.tfFrames.toggle();");
+        toggleBtn.appendChild(document.createTextNode("Hide >"));
+        body.appendChild(toggleBtn);
+
+        var testBtn = document.createElement("button");
+        testBtn.setAttribute("type", "button");
+        testBtn.setAttribute("id", "tbtn");
+        testBtn.setAttribute("onclick", "window.tfFrames.test();");
+        testBtn.appendChild(document.createTextNode("Test >"));
+        body.appendChild(testBtn);
 
         var form = document.createElement("form");
 
