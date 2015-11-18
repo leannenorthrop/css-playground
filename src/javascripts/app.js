@@ -15,7 +15,8 @@ window.tfFrames = {
             var parts = lines[i].split("|");
             if (parts.length >= 3) {
                 var frame = this.getFrame(parts[2], parts[1]);
-                frame.setAttribute("style",parts[3]);
+                frame.dataset.frameExposureCount = parts[3];
+                frame.setAttribute("style",parts[4]);
             }
         }
     },
@@ -34,7 +35,7 @@ window.tfFrames = {
         for (; i < numberOfFrames; ) { 
             var spanElement = document.createElement("span");
             spanElement.dataset.frameCount = j+1;
-            spanElement.dataset.frameLength = 1;
+            spanElement.dataset.frameExposureCount = 1;
             spanElement.setAttribute("class", "opacity frame " + frameName + (j+1) + " " + frameClass);
             spanElement.setAttribute("style", "");
             framesElement.appendChild(spanElement);
@@ -69,7 +70,6 @@ window.tfFrames = {
         var frameClass = this.frameClass.value;
         var animationName = frameName;
         var animationCount = 0;
-        var letters = ['a','b','c','d','e','f','g'];
         var keyframes = "@keyframes " + animationName + "_" + animationCount + " {\n";
         var animations = animationName + "_" + animationCount + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
         var last = 0;
@@ -77,7 +77,37 @@ window.tfFrames = {
         var frameData = "/* Frame Data: \n";
         for (; i < numberOfFrames; ) {
             var frame = this.getFrame(frameCount,frameName);
-            if (frameCount % 25 == 0) {
+            var duration = (frame.dataset.frameExposureCount * 4.16);
+
+            if ((last+duration) > 100) {
+                // Handle frame exposure across boundaries
+                var d = 0;
+                for (var k = 1; k <= frame.dataset.frameExposureCount; k++) {
+                    d = (k * 4.16);
+                    if ((last+d) > 100) {
+                        break;
+                    }
+                }
+                d--;
+                duration = duration - d;
+                var n = last + (d * 4.16);
+                if (n > 99) {
+                    n = 100;
+                }
+                keyframes += "  " + last + "%," + n + "% {";
+
+                if (addComments) {
+                    keyframes += "    /* frame " + (i+1) + " rules here */";
+                }
+
+                var styles = this.getStyle(frameCount,frameName);
+                if (styles != undefined) {
+                    keyframes += styles;  
+                    frameData += frameClass + "|" + frameName + "|" + frameCount + "|" + styles + "\n";  
+                } 
+                keyframes += "}\n";
+
+                // Next animation of 1s
                 animations += animationName + "_" + animationCount + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
                 animationCount++;
                 stepCount = 1;
@@ -85,7 +115,8 @@ window.tfFrames = {
                 keyframes += "}\n\n";
                 keyframes += "@keyframes " + animationName + "_" + animationCount + " {\n";
             }
-            var next = stepCount * 4.16;
+            
+            var next = last + duration;
             if (next > 99) {
                 next = 100;
             }
@@ -98,7 +129,7 @@ window.tfFrames = {
             var styles = this.getStyle(frameCount,frameName);
             if (styles != undefined) {
                 keyframes += styles;  
-                frameData += frameClass + "|" + frameName + "|" + frameCount + "|" + styles + "\n";  
+                frameData += frameClass + "|" + frameName + "|" + frameCount + "|" + frame.dataset.frameExposureCount + "|" + styles + "\n";  
             } 
             keyframes += "}\n";
             last = next;
@@ -107,9 +138,7 @@ window.tfFrames = {
             frameCount++;
             i++;
         }
-        if (frameCount % 25 != 0) {
-            keyframes += "}\n\n"; 
-        }
+        keyframes += "}\n\n"; 
         return {'animations': animations.substr(0, animations.length-2), 'keyframes': keyframes, 'frameData': frameData};
     },
     generateKeyframes: function() {
@@ -134,6 +163,7 @@ window.tfFrames = {
         var style = frame.getAttribute("style");
         var frameStyle = this.frameStyle;
         frameStyle.value = style;
+        this.exposureCount.value = frame.dataset.frameExposureCount;
         console.log(frame);
     },
     setFrameStyle: function() {
@@ -142,6 +172,12 @@ window.tfFrames = {
         var style = frame.getAttribute("style");
         var frameStyle = this.frameStyle;
         frame.setAttribute("style", frameStyle.value);
+        console.log(frame);
+    },
+    setFrameExposureCount: function() {
+        var selectElement = this.selectFrame;
+        var frame = this.getFrame(selectElement.value, selectElement.dataset.frameName);
+        frame.dataset.frameExposureCount = this.exposureCount.value;
         console.log(frame);
     },
     toggle: function() {
@@ -193,7 +229,15 @@ window.tfFrames = {
         body.appendChild(stylesheet);
 
         var css = this._keyFrames(false);
-        stylesheet.sheet.insertRule(css.keyframes, 0);
+        console.log(css.keyframes);
+        var keyframes = css.keyframes.split("\n\n");
+        console.log(keyframes);
+        for (var i = 0; i < keyframes.length; i++) {
+            if (keyframes[i].length > 0) {
+                stylesheet.sheet.insertRule(keyframes[i], i);
+            }
+        }
+        
         stylesheet.sheet.insertRule("." + name + ".animate {animation: " + css.animations + ";animation-fill-mode: forwards;}", 1);
         console.log(stylesheet.sheet.cssRules);
         test.className = frameClass + " " + name + " animate";
@@ -300,6 +344,13 @@ window.tfFrames = {
         frameStyle.setAttribute("onchange", "window.tfFrames.setFrameStyle();");
         this.frameStyle = frameStyle;
         step3PElement.appendChild(frameStyle);
+        var frameExposureCount = document.createElement("input");
+        frameExposureCount.setAttribute("type", "number");
+        frameExposureCount.setAttribute("value", "0");
+        frameExposureCount.setAttribute("id", "frameExposureCount");
+        frameExposureCount.setAttribute("onchange", "window.tfFrames.setFrameExposureCount();");
+        this.exposureCount = frameExposureCount;
+        step3PElement.appendChild(frameExposureCount);
         step3Element.appendChild(step3PElement);
 
         var step4Element = document.createElement("li");
