@@ -1,33 +1,34 @@
 window.tfFrames = {
     loadFrames: function() {
-        var outputElement = document.getElementById("css");
+        var outputElement = this.output;
         var data = outputElement.value;
         var lines = data.split("\n");
 
-        var frameName = lines[0].split("|")[0];
-        document.getElementById("frameCount").value = lines.length;
-        document.getElementById("frameClass").value = "unknown";
-        document.getElementById("frameName").value = frameName;
+        var frameName = lines[0].split("|")[1];
+        var frameClass = lines[0].split("|")[0];
+        this.frameCount.value = lines.length;
+        this.frameClass.value = frameClass;
+        this.frameName.value = frameName;
         this.generateFrames();
 
         for (var i = 0; i < lines.length; i++) {
             var parts = lines[i].split("|");
             if (parts.length >= 3) {
-                var frame = this.getFrame(parts[1], parts[0]);
-                frame.setAttribute("style",parts[2]);
+                var frame = this.getFrame(parts[2], parts[1]);
+                frame.setAttribute("style",parts[3]);
             }
         }
     },
     generateFrames: function() {
-        var body = document.getElementsByTagName("body")[0];
-        var outputElement = document.getElementById("css");
-        var framesElement = document.getElementsByClassName("frames")[0];
-        var numberOfFrames = document.getElementById("frameCount").value;
-        var frameClass = document.getElementById("frameClass").value;  
-        var frameName = document.getElementById("frameName").value;     
-        var selectElement = document.getElementsByTagName("select")[0]; 
+        var body = this.body;
+        var outputElement = this.output;
+        var framesElement = this.framesDiv;
+        var numberOfFrames = this.frameCount.value;
+        var frameClass = this.frameClass.value;  
+        var frameName = this.frameName.value;     
+        var selectElement = this.selectFrame; 
         selectElement.dataset.frameName = frameName;
-        document.getElementById("frameName2").value = frameName;
+        this.frameName2.value = frameName;
         var i = 0;
         var j = framesElement.childElementCount;
         for (; i < numberOfFrames; ) { 
@@ -42,7 +43,6 @@ window.tfFrames = {
             optionElement.setAttribute("value", (j+1));
             optionElement.innerHTML = frameName + (j+1);
             selectElement.appendChild(optionElement);
-            //outputElement.value = outputElement.value + "\n.frame." + frameName + (i+1) + " {\n}";
             i++;
             j++;
         }
@@ -64,8 +64,9 @@ window.tfFrames = {
     _keyFrames: function(addComments) {
         var i = 0;
         var frameCount = 1;
-        var numberOfFrames = document.getElementById("frameCount").value;
-        var frameName = document.getElementById("frameName").value; 
+        var numberOfFrames = this.frameCount.value;
+        var frameName = this.frameName.value; 
+        var frameClass = this.frameClass.value;
         var animationName = frameName;
         var animationCount = 0;
         var letters = ['a','b','c','d','e','f','g'];
@@ -97,7 +98,7 @@ window.tfFrames = {
             var styles = this.getStyle(frameCount,frameName);
             if (styles != undefined) {
                 keyframes += styles;  
-                frameData += frameName + "|" + frameCount + "|" + styles + "\n";  
+                frameData += frameClass + "|" + frameName + "|" + frameCount + "|" + styles + "\n";  
             } 
             keyframes += "}\n";
             last = next;
@@ -113,8 +114,8 @@ window.tfFrames = {
     },
     generateKeyframes: function() {
         var css = this._keyFrames(true);
-        var outputElement = document.getElementById("css");
-        var frameName = document.getElementById("frameName").value; 
+        var outputElement = this.output;
+        var frameName = this.frameName.value; 
         outputElement.value = "";
         outputElement.value = outputElement.value + "." + frameName + ".animate {\n";
         outputElement.value = outputElement.value + "  animation: " + css.animations + ";\n";
@@ -127,29 +128,30 @@ window.tfFrames = {
         var frame = this.getFrame(frameNumber, name);
         return frame.getAttribute("style");
     },
-    selectFrame: function() {
-        var selectElement = document.getElementsByTagName("select")[0];
+    changeSelectFrame: function() {
+        var selectElement = this.selectFrame;
         var frame = this.getFrame(selectElement.value, selectElement.dataset.frameName);
         var style = frame.getAttribute("style");
-        var frameStyle = document.getElementById("frameStyle");
+        var frameStyle = this.frameStyle;
         frameStyle.value = style;
         console.log(frame);
     },
     setFrameStyle: function() {
-        var selectElement = document.getElementsByTagName("select")[0];
+        var selectElement = this.selectFrame;
         var frame = this.getFrame(selectElement.value, selectElement.dataset.frameName);
         var style = frame.getAttribute("style");
-        var frameStyle = document.getElementById("frameStyle");
+        var frameStyle = this.frameStyle;
         frame.setAttribute("style", frameStyle.value);
         console.log(frame);
     },
     toggle: function() {
-        var tbtn = document.getElementById("tbtn");
-        var form = document.getElementsByTagName("form")[0];
-        var textarea = document.getElementsByTagName("textarea")[0];
-        var body = document.getElementsByTagName("body")[0];
-        var framesElement = document.getElementsByClassName("frames")[0];
+        var tbtn = this.toggleBtn;
+        var form = this.form;
+        var textarea = this.output;
+        var body = this.body;
+        var framesElement = this.framesDiv;
         if (form.getAttribute("style") ==="display:none;") {
+            this.clearTest();
             form.setAttribute("style", "");
             textarea.setAttribute("style","");
             framesElement.setAttribute("style","");
@@ -163,8 +165,8 @@ window.tfFrames = {
             tbtn.innerHTML = "Show >";
         }
     },
-    test: function() {
-        var name = document.getElementById("frameName").value;
+    clearTest: function() {
+        var name = this.frameName.value;
         var e1 = document.getElementById(name+"Test");
         if (e1 != undefined) {
             e1.parentNode.removeChild(e1);
@@ -174,12 +176,15 @@ window.tfFrames = {
         if (s1 != undefined) {
             s1.parentNode.removeChild(s1);
         }
-
-        var frameClass = document.getElementById("frameClass").value;  
+    },
+    test: function() {
+        this.clearTest();
+        var name = this.frameName.value;
+        var frameClass = this.frameClass.value;  
         var frame = this.getFrame(1, name);
         var test = document.createElement("span");
         test.setAttribute("id", name+"Test");
-        var body = document.getElementsByTagName("body")[0];
+        var body = this.body;
         body.appendChild(test);
 
         var stylesheet = document.createElement("style");
@@ -201,12 +206,14 @@ window.tfFrames = {
     },
     init: function() {
         var body = document.getElementsByTagName("body")[0];
+        this.body = body;
 
         var toggleBtn = document.createElement("button");
         toggleBtn.setAttribute("type", "button");
         toggleBtn.setAttribute("id", "tbtn");
         toggleBtn.setAttribute("onclick", "window.tfFrames.toggle();");
         toggleBtn.appendChild(document.createTextNode("Hide >"));
+        this.toggleBtn = toggleBtn;
         body.appendChild(toggleBtn);
 
         var testBtn = document.createElement("button");
@@ -214,9 +221,11 @@ window.tfFrames = {
         testBtn.setAttribute("id", "tbtn");
         testBtn.setAttribute("onclick", "window.tfFrames.test();");
         testBtn.appendChild(document.createTextNode("Test >"));
+        this.testBtn = testBtn;
         body.appendChild(testBtn);
 
         var form = document.createElement("form");
+        this.form = form;
 
         var listElement = document.createElement("ol");
         var step1Element = document.createElement("li");
@@ -227,6 +236,7 @@ window.tfFrames = {
         loadBtn.setAttribute("type", "button");
         loadBtn.setAttribute("onclick", "window.tfFrames.loadFrames();");
         loadBtn.appendChild(document.createTextNode("Load"));
+        this.loadBtn = loadBtn;
         step1PElement.appendChild(loadBtn);
         step1Element.appendChild(step1PElement);
         
@@ -242,6 +252,7 @@ window.tfFrames = {
         number.setAttribute("name", "genFrames");
         number.setAttribute("value", "50");
         number.setAttribute("id", "frameCount");
+        this.frameCount = number;
         step2PElement.appendChild(number);
 
         step2PElement.appendChild(document.createTextNode(" frames with class "));
@@ -250,6 +261,7 @@ window.tfFrames = {
         clazz.setAttribute("type", "text");
         clazz.setAttribute("value", "");
         clazz.setAttribute("id", "frameClass");
+        this.frameClass = clazz;
         step2PElement.appendChild(clazz);
 
         step2PElement.appendChild(document.createTextNode(" with name "));
@@ -258,12 +270,14 @@ window.tfFrames = {
         fName.setAttribute("type", "text");
         fName.setAttribute("value", "");
         fName.setAttribute("id", "frameName");
+        this.frameName = fName;
         step2PElement.appendChild(fName);
 
         var goBtn = document.createElement("button");
         goBtn.setAttribute("type", "button");
         goBtn.setAttribute("onclick", "window.tfFrames.generateFrames();");
         goBtn.appendChild(document.createTextNode("Go >"));
+        this.goBtn = goBtn;
         step2PElement.appendChild(goBtn);
         step2Element.appendChild(step2PElement);
 
@@ -274,7 +288,8 @@ window.tfFrames = {
         step3PElement.appendChild(document.createTextNode("Select "));
         var selectFrame = document.createElement("select");
         selectFrame.setAttribute("name", "frame");
-        selectFrame.setAttribute("onchange", "window.tfFrames.selectFrame();");
+        selectFrame.setAttribute("onchange", "window.tfFrames.changeSelectFrame();");
+        this.selectFrame = selectFrame;
         step3PElement.appendChild(selectFrame);
         step3PElement.appendChild(document.createTextNode(" frame and set style to "));
         var frameStyle = document.createElement("input");
@@ -283,6 +298,7 @@ window.tfFrames = {
         frameStyle.setAttribute("id", "frameStyle");
         frameStyle.setAttribute("style", "width:500px;");
         frameStyle.setAttribute("onchange", "window.tfFrames.setFrameStyle();");
+        this.frameStyle = frameStyle;
         step3PElement.appendChild(frameStyle);
         step3Element.appendChild(step3PElement);
 
@@ -294,12 +310,14 @@ window.tfFrames = {
         fName2.setAttribute("type", "text");
         fName2.setAttribute("value", "");
         fName2.setAttribute("id", "frameName2");
+        this.frameName2 = fName2;
         step4PElement.appendChild(fName2);
         step4PElement.appendChild(document.createTextNode(" frames and "));
         var genBtn = document.createElement("button");
         genBtn.setAttribute("type", "button");
         genBtn.setAttribute("onclick", "window.tfFrames.generateKeyframes();");
         genBtn.appendChild(document.createTextNode("Generate Keyframes >"));
+        this.genBtn = genBtn;
         step4PElement.appendChild(genBtn);
         step4Element.appendChild(step4PElement);
 
@@ -310,10 +328,12 @@ window.tfFrames = {
         outputElement.setAttribute("rows", "10");
         outputElement.setAttribute("cols", "100");
         outputElement.setAttribute("id", "css");
+        this.output = outputElement;
         body.appendChild(outputElement);
 
         var framesDiv = document.createElement("div");
         framesDiv.setAttribute("class", "frames");
+        this.framesDiv = framesDiv;
         body.appendChild(framesDiv);
 
         this.toggle();
