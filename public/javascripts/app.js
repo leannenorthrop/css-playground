@@ -232,9 +232,11 @@ window.tfFrames = {
     },
     save: function() {
         this.testBtn.setAttribute("disabled","");
+        this.keepBtn.setAttribute("disabled","");
         var css = this._keyFrames(true);
 
         var aniName = this.nameElement.value;
+        var name = this.frameName.value;
         var s1 = document.getElementById(aniName + "StyleTest");
         if (s1 != undefined) {
             s1.setAttribute("id",aniName+"Style");
@@ -260,13 +262,13 @@ window.tfFrames = {
         this.frameName2.value = "";
         this.exposureCount.value = "1";
         this.frameCount.value = "50";
+        this.output.value = "";
 
         var pre = document.createElement("pre");
         pre.setAttribute("id", aniName + "FrameData");
         pre.setAttribute("style","display:none;");
-        pre.innerHTML = aniName + "\n" + css.frameData;
+        pre.innerHTML = "/*" + aniName + "*/\n" + css.frameData + "\n" + css.keyframes + "\n." + name + ".animate {animation: " + css.animations + ";animation-fill-mode: forwards;}";
         this.body.appendChild(pre);
-        this.toggleFrameData();
         this.toggleFrameDataBtn.removeAttribute("disabled");
     },
     test: function() {
