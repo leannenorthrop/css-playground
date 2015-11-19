@@ -1,0 +1,55 @@
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; }
+
+html {
+  font-size: 10px;
+  -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: "Ovo", Georgia, "Times New Roman", Times, serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #757472;
+  background-color: #f9f9f9; }
+
+.grid {
+  background-color: white;
+  background-image: -webkit-linear-gradient(rgba(50, 50, 50, 0.09) 2px, transparent 2px), -webkit-linear-gradient(0deg, rgba(50, 50, 50, 0.09) 2px, transparent 2px), -webkit-linear-gradient(rgba(50, 50, 50, 0.07) 1px, transparent 1px), -webkit-linear-gradient(0deg, rgba(50, 50, 50, 0.07) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(50, 50, 50, 0.09) 2px, transparent 2px), linear-gradient(90deg, rgba(50, 50, 50, 0.09) 2px, transparent 2px), linear-gradient(rgba(50, 50, 50, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(50, 50, 50, 0.07) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px; }
+
+ol {
+  counter-reset: item;
+  list-style-type: none; }
+
+ol li:before {
+  content: "Step " counter(item, decimal) ". ";
+  counter-increment: item;
+  font-weight: bold; }
+
+ol li p {
+  display: inline; }
+
+form {
+  padding: 10px 20px 10px 20px;
+  background-color: rgba(200, 200, 200, 0.75); }
+
+form textarea {
+  width: 100%; }
+
+.ghost {
+  opacity: 0.27; }
+
+.opaque {
+  opacity: 1; }
+
+.box {
+  position: absolute;
+  top: 150px;
+  left: 150px;
+  width: 50px;
+  height: 50px;
+  background-color: blue; }

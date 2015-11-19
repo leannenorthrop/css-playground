@@ -1,9 +1,14 @@
 /* Your styles (and Sass) start here */
 .ani-menu {
-}
+  postion: fixed;
+  display: inline-block;
+  left: 0;
+  width: 12%; }
 
 .ani-stage {
-  width: 100%;
-  min-height: 800px;
-  border: 0px solid transparent; 
-}
+  position: fixed;
+  display: inline-block;
+  left: 12%;
+  width: 88%;
+  height: 95%;
+  border: 0px solid transparent; }

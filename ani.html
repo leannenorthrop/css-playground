@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1">
+    <title>Animation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheet.css">
+    <style type="text/css">
+      /*Box1*/
+/* Frame Data: 
+box|Box1_|1|5|left:250px;
+box|Box1_|2|5|left:350px;
+*/
+@keyframes Box1__0 {
+  0%,20.8% {    /* frame 1 rules here */left:250px;}
+  20.8%,100% {    /* frame 2 rules here */left:350px;}
+}
+
+
+.Box1_.animate {animation: Box1__0 1s steps(24) 1 0s;animation-fill-mode: forwards;}
+
+.box {position: absolute;top: 150px;left: 150px;width: 50px;height: 50px;background-color: blue;}
+   </style>
+  </head>
+  <body>
+      <span class='box Box1_ animate'></span>
+  </body>
+</html>
