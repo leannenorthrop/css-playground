@@ -345,10 +345,10 @@ window.tfFrames = {
             var s = preEle.getAttribute("style");
             if (s === hideStyle) {
                 preEle.setAttribute("style","");
-                this.toggleFrameDataBtn.innerHTML = "Hide Frame Data";
+                this.toggleFrameDataBtn.innerHTML = "Hide Data";
             } else {
                 preEle.setAttribute("style",hideStyle);
-                this.toggleFrameDataBtn.innerHTML = "View Frame Data";
+                this.toggleFrameDataBtn.innerHTML = "View Data";
             }
         }
     },
@@ -392,7 +392,7 @@ window.tfFrames = {
         toggleFrameDataBtn.setAttribute("onclick", "window.tfFrames.toggleFrameData();");
         toggleFrameDataBtn.setAttribute("disabled", "");
         toggleFrameDataBtn.setAttribute("tabindex", tabindex++);
-        toggleFrameDataBtn.appendChild(document.createTextNode("View Frame Data"));
+        toggleFrameDataBtn.appendChild(document.createTextNode("View Data"));
         this.toggleFrameDataBtn = toggleFrameDataBtn;
         body.appendChild(toggleFrameDataBtn);
 
