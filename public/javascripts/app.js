@@ -230,9 +230,40 @@ window.tfFrames = {
             s1.parentNode.removeChild(s1);
         }
     },
+    outputToHTML: function() {
+        this.output.value ='<!DOCTYPE html>\n';
+        this.output.value +='<html lang="en">\n';
+        this.output.value +='  <head>\n';
+        this.output.value +='    <meta charset="utf-8" />\n';
+        this.output.value +='    <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1">\n';
+        this.output.value +='    <title>Animation</title>\n';
+        this.output.value +='    <meta name="viewport" content="width=device-width, initial-scale=1">\n';
+        this.output.value +='    <link rel="stylesheet" href="stylesheet.css">\n';
+        this.output.value +='    <style type="text/css">\n';
+        var preElements = document.getElementsByTagName("pre");
+        for (var i = 0; i < preElements.length; i++) {
+            var preEle = preElements[i];
+            this.output.value +='      ' + preEle.innerHTML;
+        }
+        //this.output.value += '.box {position: absolute;top: 150px;left: 150px;width: 50px;height: 50px;background-color: blue;}\n';
+        this.output.value += '\n   </style>\n';
+        this.output.value +='  </head>\n';
+        this.output.value +='  <body>\n';
+        var spanElements = document.getElementsByTagName("span");
+        for (var i = 0; i < spanElements.length; i++) {
+            var spanElement = spanElements[i];
+            if (spanElement.className.indexOf("animate") >= 0) {
+                this.output.value +="      <span class='" + spanElement.className + "'></span>\n";
+            }
+        }
+        this.output.value +='  </body>\n';
+        this.output.value +='</html>\n';
+        return true;
+    },
     save: function() {
         this.testBtn.setAttribute("disabled","");
         this.keepBtn.setAttribute("disabled","");
+        this.exportDataBtn.removeAttribute("disabled")
         var css = this._keyFrames(true);
 
         var aniName = this.nameElement.value;
@@ -396,6 +427,16 @@ window.tfFrames = {
         this.toggleFrameDataBtn = toggleFrameDataBtn;
         body.appendChild(toggleFrameDataBtn);
 
+        var exportDataBtn = document.createElement("button");
+        exportDataBtn.setAttribute("type", "button");
+        exportDataBtn.setAttribute("id", "exportBtn");
+        exportDataBtn.setAttribute("onclick", "window.tfFrames.outputToHTML();");
+        exportDataBtn.setAttribute("disabled", "");
+        exportDataBtn.setAttribute("tabindex", tabindex++);
+        exportDataBtn.appendChild(document.createTextNode("Get HTML"));
+        this.exportDataBtn = exportDataBtn;
+        body.appendChild(exportDataBtn);
+
         var form = document.createElement("form");
         this.form = form;
 
@@ -405,7 +446,7 @@ window.tfFrames = {
         listElement.appendChild(step0Element);
         var step0PElement = document.createElement("p");
         var step0Label = document.createElement("label");
-        step0Label.innerHTML = "Give a name ";
+        step0Label.innerHTML = "Give a name (no spaces please)";
         step0PElement.appendChild(step0Label);
         var nameInput = document.createElement("input");
         nameInput.setAttribute("type", "text");
@@ -419,7 +460,7 @@ window.tfFrames = {
         var step1Element = document.createElement("li");
         listElement.appendChild(step1Element);
         var step1PElement = document.createElement("p");
-        step1PElement.appendChild(document.createTextNode("(Optional) Paste previously generated frame data into textarea below and "));
+        step1PElement.appendChild(document.createTextNode("(Optional) Paste previously generated frame data (for one element) into textarea below and "));
         var loadBtn = document.createElement("button");
         loadBtn.setAttribute("type", "button");
         loadBtn.setAttribute("onclick", "window.tfFrames.loadFrames();");
@@ -522,6 +563,19 @@ window.tfFrames = {
         this.genBtn = genBtn;
         step4PElement.appendChild(genBtn);
         //step4Element.appendChild(step4PElement);
+
+        var stepText = ["Press test button to see results","Re-edit until happy.",
+        "After final test click Keep button (which empties the form to allow work on another element).",
+        "Repeat steps above until finished.",
+        "Once all happy click Get HTML button to put html in the box below (remember to include you own stylesheet).",
+        "Use the View Data button to view frame data."];
+        for (var i = 0; i < stepText.length; i++) {
+            var liElement = document.createElement("li");
+            listElement.appendChild(liElement);
+            var pElement = document.createElement("p");
+            pElement.appendChild(document.createTextNode(stepText[i]));
+            liElement.appendChild(pElement);
+        }
 
         form.appendChild(listElement);
         body.appendChild(form);
