@@ -145,7 +145,7 @@ window.tfFrames = {
             i++;
         }
         keyframes += "}\n\n"; 
-        return {'animations': animations.substr(0, animations.length-2), 'keyframes': keyframes, 'frameData': frameData};
+        return {'animations': animations.substr(0, animations.length-2), 'keyframes': keyframes, 'frameData': frameData + "*/"};
     },
     generateKeyframes: function() {
         var css = this._keyFrames(true);
@@ -231,6 +231,9 @@ window.tfFrames = {
         }
     },
     save: function() {
+        this.testBtn.setAttribute("disabled","");
+        var css = this._keyFrames(true);
+
         var aniName = this.nameElement.value;
         var s1 = document.getElementById(aniName + "StyleTest");
         if (s1 != undefined) {
@@ -257,6 +260,14 @@ window.tfFrames = {
         this.frameName2.value = "";
         this.exposureCount.value = "1";
         this.frameCount.value = "50";
+
+        var pre = document.createElement("pre");
+        pre.setAttribute("id", aniName + "FrameData");
+        pre.setAttribute("style","display:none;");
+        pre.innerHTML = aniName + "\n" + css.frameData;
+        this.body.appendChild(pre);
+        this.toggleFrameData();
+        this.toggleFrameDataBtn.removeAttribute("disabled");
     },
     test: function() {
         this.clearTest();
@@ -295,8 +306,52 @@ window.tfFrames = {
         }
 
         this.keepBtn.removeAttribute("disabled");
+
+        var aniElements = document.getElementsByClassName("animate");
+        var ids = [];
+        var until = aniElements.length;
+        for (var i = 0; i < until; i++) {
+            ids.push(aniElements[i].getAttribute("id"));
+        }
+
+        for (var i = 0; i < ids.length; i++) {
+            var el = document.getElementById(ids[i]);
+            if (el != undefined) {
+                el.className = el.className.replace( /(?:^|\s)animate(?!\S)/g , '' );  
+            }
+        }
+
+        var t = setTimeout(function() {
+            for (var i = 0; i < ids.length; i++) {
+                var el = document.getElementById(ids[i]);
+                if (el != undefined) {
+                    el.className = el.className + " animate";    
+                }
+            }
+            clearTimeout(t);
+        }, 10);
+    },
+    setAnimationName: function() {
+        this.frameName.value = this.nameElement.value + "_";
+        this.testBtn.removeAttribute("disabled");
+    },
+    toggleFrameData: function() {
+        var preElements = document.getElementsByTagName("pre");
+        var hideStyle = "display:none;";
+        for (var i = 0; i < preElements.length; i++) {
+            var preEle = preElements[i];
+            var s = preEle.getAttribute("style");
+            if (s === hideStyle) {
+                preEle.setAttribute("style","");
+                this.toggleFrameDataBtn.innerHTML = "Hide Frame Data";
+            } else {
+                preEle.setAttribute("style",hideStyle);
+                this.toggleFrameDataBtn.innerHTML = "View Frame Data";
+            }
+        }
     },
     init: function() {
+        var tabindex = 1;
         var body = document.getElementsByTagName("body")[0];
         this.body = body;
 
@@ -304,7 +359,7 @@ window.tfFrames = {
         toggleBtn.setAttribute("type", "button");
         toggleBtn.setAttribute("id", "tbtn");
         toggleBtn.setAttribute("onclick", "window.tfFrames.toggle();");
-        toggleBtn.setAttribute("tabindex", "1");
+        toggleBtn.setAttribute("tabindex", tabindex++);
         toggleBtn.appendChild(document.createTextNode("Hide >"));
         this.toggleBtn = toggleBtn;
         body.appendChild(toggleBtn);
@@ -313,7 +368,8 @@ window.tfFrames = {
         testBtn.setAttribute("type", "button");
         testBtn.setAttribute("id", "tbtn");
         testBtn.setAttribute("onclick", "window.tfFrames.test();");
-        testBtn.setAttribute("tabindex", "2");
+        testBtn.setAttribute("disabled", "");
+        testBtn.setAttribute("tabindex", tabindex++);
         testBtn.appendChild(document.createTextNode("Test >"));
         this.testBtn = testBtn;
         body.appendChild(testBtn);
@@ -323,10 +379,20 @@ window.tfFrames = {
         keepBtn.setAttribute("id", "keepBtn");
         keepBtn.setAttribute("onclick", "window.tfFrames.save();");
         keepBtn.setAttribute("disabled", "");
-        keepBtn.setAttribute("tabindex", "3");
+        keepBtn.setAttribute("tabindex", tabindex++);
         keepBtn.appendChild(document.createTextNode("Keep"));
         this.keepBtn = keepBtn;
         body.appendChild(keepBtn);
+
+        var toggleFrameDataBtn = document.createElement("button");
+        toggleFrameDataBtn.setAttribute("type", "button");
+        toggleFrameDataBtn.setAttribute("id", "toggleFrameDataBtn");
+        toggleFrameDataBtn.setAttribute("onclick", "window.tfFrames.toggleFrameData();");
+        toggleFrameDataBtn.setAttribute("disabled", "");
+        toggleFrameDataBtn.setAttribute("tabindex", tabindex++);
+        toggleFrameDataBtn.appendChild(document.createTextNode("View Frame Data"));
+        this.toggleFrameDataBtn = toggleFrameDataBtn;
+        body.appendChild(toggleFrameDataBtn);
 
         var form = document.createElement("form");
         this.form = form;
@@ -342,7 +408,8 @@ window.tfFrames = {
         var nameInput = document.createElement("input");
         nameInput.setAttribute("type", "text");
         nameInput.setAttribute("id", "name");
-        nameInput.setAttribute("tabindex", "4");
+        nameInput.setAttribute("tabindex", tabindex++);
+        nameInput.setAttribute("onkeyup", "window.tfFrames.setAnimationName();");
         this.nameElement = nameInput;
         step0PElement.appendChild(nameInput);
         step0Element.appendChild(step0PElement);
@@ -354,7 +421,7 @@ window.tfFrames = {
         var loadBtn = document.createElement("button");
         loadBtn.setAttribute("type", "button");
         loadBtn.setAttribute("onclick", "window.tfFrames.loadFrames();");
-        loadBtn.setAttribute("tabindex", "5");
+        loadBtn.setAttribute("tabindex", tabindex++);
         loadBtn.appendChild(document.createTextNode("Load"));
         this.loadBtn = loadBtn;
         step1PElement.appendChild(loadBtn);
@@ -372,7 +439,7 @@ window.tfFrames = {
         number.setAttribute("name", "genFrames");
         number.setAttribute("value", "50");
         number.setAttribute("id", "frameCount");
-        number.setAttribute("tabindex", "6");
+        number.setAttribute("tabindex", tabindex++);
         this.frameCount = number;
         step2PElement.appendChild(number);
 
@@ -382,24 +449,23 @@ window.tfFrames = {
         clazz.setAttribute("type", "text");
         clazz.setAttribute("value", "");
         clazz.setAttribute("id", "frameClass");
-        clazz.setAttribute("tabindex", "7");
+        clazz.setAttribute("tabindex", tabindex++);
         this.frameClass = clazz;
         step2PElement.appendChild(clazz);
 
-        step2PElement.appendChild(document.createTextNode(" with name "));
-
+        //step2PElement.appendChild(document.createTextNode(" with name "));
         var fName = document.createElement("input");
         fName.setAttribute("type", "text");
         fName.setAttribute("value", "");
         fName.setAttribute("id", "frameName");
-        fName.setAttribute("tabindex", "8");
+        //fName.setAttribute("tabindex", "8");
         this.frameName = fName;
-        step2PElement.appendChild(fName);
+        //step2PElement.appendChild(fName);
 
         var goBtn = document.createElement("button");
         goBtn.setAttribute("type", "button");
         goBtn.setAttribute("onclick", "window.tfFrames.generateFrames();");
-        goBtn.setAttribute("tabindex", "9");
+        goBtn.setAttribute("tabindex", tabindex++);
         goBtn.appendChild(document.createTextNode("Go >"));
         this.goBtn = goBtn;
         step2PElement.appendChild(goBtn);
@@ -413,7 +479,7 @@ window.tfFrames = {
         var selectFrame = document.createElement("select");
         selectFrame.setAttribute("name", "frame");
         selectFrame.setAttribute("onchange", "window.tfFrames.changeSelectFrame();");
-        selectFrame.setAttribute("tabindex", "10");
+        selectFrame.setAttribute("tabindex", tabindex++);
         this.selectFrame = selectFrame;
         step3PElement.appendChild(selectFrame);
         step3PElement.appendChild(document.createTextNode(" frame and set style to "));
@@ -423,7 +489,7 @@ window.tfFrames = {
         frameStyle.setAttribute("id", "frameStyle");
         frameStyle.setAttribute("style", "width:500px;");
         frameStyle.setAttribute("onkeyup", "window.tfFrames.setFrameStyle();");
-        frameStyle.setAttribute("tabindex", "11");
+        frameStyle.setAttribute("tabindex", tabindex++);
         this.frameStyle = frameStyle;
         step3PElement.appendChild(frameStyle);
         var frameExposureCount = document.createElement("input");
@@ -431,7 +497,7 @@ window.tfFrames = {
         frameExposureCount.setAttribute("value", "1");
         frameExposureCount.setAttribute("id", "frameExposureCount");
         frameExposureCount.setAttribute("onblur", "window.tfFrames.setFrameExposureCount();");
-        frameExposureCount.setAttribute("tabindex", "12");
+        frameExposureCount.setAttribute("tabindex", tabindex++);
         this.exposureCount = frameExposureCount;
         step3PElement.appendChild(frameExposureCount);
         step3Element.appendChild(step3PElement);
@@ -462,7 +528,7 @@ window.tfFrames = {
         outputElement.setAttribute("rows", "10");
         outputElement.setAttribute("cols", "100");
         outputElement.setAttribute("id", "css");
-        outputElement.setAttribute("tabindex", "13");
+        outputElement.setAttribute("tabindex", tabindex++);
         this.output = outputElement;
         form.appendChild(outputElement);
 
