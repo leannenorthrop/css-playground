@@ -209,6 +209,7 @@ window.tfFrames = {
             framesElement.setAttribute("style","");
             body.className += "grid";
             tbtn.innerHTML = "Hide >";
+            this.keepBtn.setAttribute("disabled","");
         } else {
             form.setAttribute("style", "display:none;");
             textarea.setAttribute("style","display:none;");
@@ -224,10 +225,38 @@ window.tfFrames = {
             e1.parentNode.removeChild(e1);
         }
 
-        var s1 = document.getElementById(aniName + "Test");
+        var s1 = document.getElementById(aniName + "StyleTest");
         if (s1 != undefined) {
             s1.parentNode.removeChild(s1);
         }
+    },
+    save: function() {
+        var aniName = this.nameElement.value;
+        var s1 = document.getElementById(aniName + "StyleTest");
+        if (s1 != undefined) {
+            s1.setAttribute("id",aniName+"Style");
+        }
+
+        var e1 = document.getElementById(aniName + "Test");
+        if (e1 != undefined) {
+            e1.setAttribute("id",aniName);
+        }
+
+        this.nameElement.value = "";
+        this.selectFrame.innerHTML = "";
+        this.selectFrame.dataset.frameName = "";
+        while (this.framesDiv.children.length > 0) {
+            var f = this.framesDiv.children[0];
+            if (f != undefined) {
+                f.parentNode.removeChild(f);
+            }
+        }
+        this.frameClass.value = "";
+        this.frameStyle.value = "";
+        this.frameName.value = "";
+        this.frameName2.value = "";
+        this.exposureCount.value = "1";
+        this.frameCount.value = "50";
     },
     test: function() {
         this.clearTest();
@@ -241,7 +270,7 @@ window.tfFrames = {
         body.appendChild(test);
 
         var stylesheet = document.createElement("style");
-        stylesheet.setAttribute("id", aniName + "Test");
+        stylesheet.setAttribute("id", aniName + "StyleTest");
         stylesheet.appendChild(document.createTextNode(""));
         body.appendChild(stylesheet);
 
@@ -264,6 +293,8 @@ window.tfFrames = {
         } else {
             this.toggle();    
         }
+
+        this.keepBtn.removeAttribute("disabled");
     },
     init: function() {
         var body = document.getElementsByTagName("body")[0];
@@ -287,6 +318,16 @@ window.tfFrames = {
         this.testBtn = testBtn;
         body.appendChild(testBtn);
 
+        var keepBtn = document.createElement("button");
+        keepBtn.setAttribute("type", "button");
+        keepBtn.setAttribute("id", "keepBtn");
+        keepBtn.setAttribute("onclick", "window.tfFrames.save();");
+        keepBtn.setAttribute("disabled", "");
+        keepBtn.setAttribute("tabindex", "3");
+        keepBtn.appendChild(document.createTextNode("Keep"));
+        this.keepBtn = keepBtn;
+        body.appendChild(keepBtn);
+
         var form = document.createElement("form");
         this.form = form;
 
@@ -301,7 +342,7 @@ window.tfFrames = {
         var nameInput = document.createElement("input");
         nameInput.setAttribute("type", "text");
         nameInput.setAttribute("id", "name");
-        nameInput.setAttribute("tabindex", "3");
+        nameInput.setAttribute("tabindex", "4");
         this.nameElement = nameInput;
         step0PElement.appendChild(nameInput);
         step0Element.appendChild(step0PElement);
@@ -313,7 +354,7 @@ window.tfFrames = {
         var loadBtn = document.createElement("button");
         loadBtn.setAttribute("type", "button");
         loadBtn.setAttribute("onclick", "window.tfFrames.loadFrames();");
-        loadBtn.setAttribute("tabindex", "4");
+        loadBtn.setAttribute("tabindex", "5");
         loadBtn.appendChild(document.createTextNode("Load"));
         this.loadBtn = loadBtn;
         step1PElement.appendChild(loadBtn);
@@ -331,7 +372,7 @@ window.tfFrames = {
         number.setAttribute("name", "genFrames");
         number.setAttribute("value", "50");
         number.setAttribute("id", "frameCount");
-        number.setAttribute("tabindex", "5");
+        number.setAttribute("tabindex", "6");
         this.frameCount = number;
         step2PElement.appendChild(number);
 
@@ -341,7 +382,7 @@ window.tfFrames = {
         clazz.setAttribute("type", "text");
         clazz.setAttribute("value", "");
         clazz.setAttribute("id", "frameClass");
-        clazz.setAttribute("tabindex", "6");
+        clazz.setAttribute("tabindex", "7");
         this.frameClass = clazz;
         step2PElement.appendChild(clazz);
 
@@ -351,14 +392,14 @@ window.tfFrames = {
         fName.setAttribute("type", "text");
         fName.setAttribute("value", "");
         fName.setAttribute("id", "frameName");
-        fName.setAttribute("tabindex", "7");
+        fName.setAttribute("tabindex", "8");
         this.frameName = fName;
         step2PElement.appendChild(fName);
 
         var goBtn = document.createElement("button");
         goBtn.setAttribute("type", "button");
         goBtn.setAttribute("onclick", "window.tfFrames.generateFrames();");
-        goBtn.setAttribute("tabindex", "8");
+        goBtn.setAttribute("tabindex", "9");
         goBtn.appendChild(document.createTextNode("Go >"));
         this.goBtn = goBtn;
         step2PElement.appendChild(goBtn);
@@ -372,7 +413,7 @@ window.tfFrames = {
         var selectFrame = document.createElement("select");
         selectFrame.setAttribute("name", "frame");
         selectFrame.setAttribute("onchange", "window.tfFrames.changeSelectFrame();");
-        selectFrame.setAttribute("tabindex", "9");
+        selectFrame.setAttribute("tabindex", "10");
         this.selectFrame = selectFrame;
         step3PElement.appendChild(selectFrame);
         step3PElement.appendChild(document.createTextNode(" frame and set style to "));
@@ -382,7 +423,7 @@ window.tfFrames = {
         frameStyle.setAttribute("id", "frameStyle");
         frameStyle.setAttribute("style", "width:500px;");
         frameStyle.setAttribute("onkeyup", "window.tfFrames.setFrameStyle();");
-        frameStyle.setAttribute("tabindex", "10");
+        frameStyle.setAttribute("tabindex", "11");
         this.frameStyle = frameStyle;
         step3PElement.appendChild(frameStyle);
         var frameExposureCount = document.createElement("input");
@@ -390,7 +431,7 @@ window.tfFrames = {
         frameExposureCount.setAttribute("value", "1");
         frameExposureCount.setAttribute("id", "frameExposureCount");
         frameExposureCount.setAttribute("onblur", "window.tfFrames.setFrameExposureCount();");
-        frameExposureCount.setAttribute("tabindex", "11");
+        frameExposureCount.setAttribute("tabindex", "12");
         this.exposureCount = frameExposureCount;
         step3PElement.appendChild(frameExposureCount);
         step3Element.appendChild(step3PElement);
@@ -421,7 +462,7 @@ window.tfFrames = {
         outputElement.setAttribute("rows", "10");
         outputElement.setAttribute("cols", "100");
         outputElement.setAttribute("id", "css");
-        outputElement.setAttribute("tabindex", "12");
+        outputElement.setAttribute("tabindex", "13");
         this.output = outputElement;
         form.appendChild(outputElement);
 
