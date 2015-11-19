@@ -33,6 +33,13 @@ ol li:before {
 ol li p {
   display: inline; }
 
+form {
+  padding: 10px 20px 10px 20px;
+  background-color: rgba(200, 200, 200, 0.75); }
+
+form textarea {
+  width: 100%; }
+
 .box {
   position: absolute;
   top: 150px;

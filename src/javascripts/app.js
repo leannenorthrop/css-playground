@@ -202,29 +202,30 @@ window.tfFrames = {
         }
     },
     clearTest: function() {
-        var name = this.frameName.value;
-        var e1 = document.getElementById(name+"Test");
+        var aniName = this.nameElement.value;
+        var e1 = document.getElementById(aniName+"Test");
         if (e1 != undefined) {
             e1.parentNode.removeChild(e1);
         }
 
-        var s1 = document.getElementById("animationtest");
+        var s1 = document.getElementById(aniName + "Test");
         if (s1 != undefined) {
             s1.parentNode.removeChild(s1);
         }
     },
     test: function() {
         this.clearTest();
+        var aniName = this.nameElement.value;
         var name = this.frameName.value;
         var frameClass = this.frameClass.value;  
         var frame = this.getFrame(1, name);
         var test = document.createElement("span");
-        test.setAttribute("id", name+"Test");
+        test.setAttribute("id", aniName+"Test");
         var body = this.body;
         body.appendChild(test);
 
         var stylesheet = document.createElement("style");
-        stylesheet.setAttribute("id", "animationtest");
+        stylesheet.setAttribute("id", aniName + "Test");
         stylesheet.appendChild(document.createTextNode(""));
         body.appendChild(stylesheet);
 
@@ -272,6 +273,20 @@ window.tfFrames = {
         this.form = form;
 
         var listElement = document.createElement("ol");
+
+        var step0Element = document.createElement("li");
+        listElement.appendChild(step0Element);
+        var step0PElement = document.createElement("p");
+        var step0Label = document.createElement("label");
+        step0Label.innerHTML = "Give a name ";
+        step0PElement.appendChild(step0Label);
+        var nameInput = document.createElement("input");
+        nameInput.setAttribute("type", "text");
+        nameInput.setAttribute("id", "name");
+        this.nameElement = nameInput;
+        step0PElement.appendChild(nameInput);
+        step0Element.appendChild(step0PElement);
+
         var step1Element = document.createElement("li");
         listElement.appendChild(step1Element);
         var step1PElement = document.createElement("p");
@@ -341,20 +356,20 @@ window.tfFrames = {
         frameStyle.setAttribute("value", "");
         frameStyle.setAttribute("id", "frameStyle");
         frameStyle.setAttribute("style", "width:500px;");
-        frameStyle.setAttribute("onchange", "window.tfFrames.setFrameStyle();");
+        frameStyle.setAttribute("onblur", "window.tfFrames.setFrameStyle();");
         this.frameStyle = frameStyle;
         step3PElement.appendChild(frameStyle);
         var frameExposureCount = document.createElement("input");
         frameExposureCount.setAttribute("type", "number");
-        frameExposureCount.setAttribute("value", "0");
+        frameExposureCount.setAttribute("value", "1");
         frameExposureCount.setAttribute("id", "frameExposureCount");
-        frameExposureCount.setAttribute("onchange", "window.tfFrames.setFrameExposureCount();");
+        frameExposureCount.setAttribute("onblur", "window.tfFrames.setFrameExposureCount();");
         this.exposureCount = frameExposureCount;
         step3PElement.appendChild(frameExposureCount);
         step3Element.appendChild(step3PElement);
 
         var step4Element = document.createElement("li");
-        listElement.appendChild(step4Element);
+        //listElement.appendChild(step4Element);
         var step4PElement = document.createElement("p");
         step4PElement.appendChild(document.createTextNode("Use "));
         var fName2 = document.createElement("input");
@@ -370,7 +385,7 @@ window.tfFrames = {
         genBtn.appendChild(document.createTextNode("Generate Keyframes >"));
         this.genBtn = genBtn;
         step4PElement.appendChild(genBtn);
-        step4Element.appendChild(step4PElement);
+        //step4Element.appendChild(step4PElement);
 
         form.appendChild(listElement);
         body.appendChild(form);
@@ -380,7 +395,7 @@ window.tfFrames = {
         outputElement.setAttribute("cols", "100");
         outputElement.setAttribute("id", "css");
         this.output = outputElement;
-        body.appendChild(outputElement);
+        form.appendChild(outputElement);
 
         var framesDiv = document.createElement("div");
         framesDiv.setAttribute("class", "frames");
