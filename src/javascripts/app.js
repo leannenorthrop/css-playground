@@ -13,7 +13,7 @@ window.tfFrames = {
 
         for (var i = 0; i < lines.length; i++) {
             var parts = lines[i].split("|");
-            if (parts.length >= 3) {
+            if (parts.length >= 5) {
                 var frame = this.getFrame(parts[2], parts[1]);
                 frame.dataset.frameExposureCount = parts[3];
                 frame.setAttribute("style",parts[4]);
@@ -36,7 +36,13 @@ window.tfFrames = {
             var spanElement = document.createElement("span");
             spanElement.dataset.frameCount = j+1;
             spanElement.dataset.frameExposureCount = 1;
-            spanElement.setAttribute("class", "opacity frame " + frameName + (j+1) + " " + frameClass);
+
+            if (i == 0) {
+                spanElement.setAttribute("class", "opaque frame " + frameName + (j+1) + " " + frameClass);
+            } else {
+                spanElement.setAttribute("class", "ghost frame " + frameName + (j+1) + " " + frameClass);
+            }
+            
             spanElement.setAttribute("style", "");
             framesElement.appendChild(spanElement);
 
@@ -158,13 +164,21 @@ window.tfFrames = {
         return frame.getAttribute("style");
     },
     changeSelectFrame: function() {
+        var f = document.getElementsByClassName("opaque").length > 0 ? document.getElementsByClassName("opaque")[0] : undefined;
+        if (f != undefined){
+            f.className = f.className.replace( /(?:^|\s)opaque(?!\S)/g , 'ghost');
+        }
+
         var selectElement = this.selectFrame;
         var frame = this.getFrame(selectElement.value, selectElement.dataset.frameName);
+        frame.className = frame.className.replace( /(?:^|\s)ghost(?!\S)/g , 'opaque');
         var style = frame.getAttribute("style");
-        var frameStyle = this.frameStyle;
-        frameStyle.value = style;
+        this.frameStyle.value = style;
         this.exposureCount.value = frame.dataset.frameExposureCount;
+        
+
         console.log(frame);
+        return true;
     },
     setFrameStyle: function() {
         var selectElement = this.selectFrame;
@@ -173,12 +187,14 @@ window.tfFrames = {
         var frameStyle = this.frameStyle;
         frame.setAttribute("style", frameStyle.value);
         console.log(frame);
+        return true;
     },
     setFrameExposureCount: function() {
         var selectElement = this.selectFrame;
         var frame = this.getFrame(selectElement.value, selectElement.dataset.frameName);
         frame.dataset.frameExposureCount = this.exposureCount.value;
         console.log(frame);
+        return true;
     },
     toggle: function() {
         var tbtn = this.toggleBtn;
@@ -257,6 +273,7 @@ window.tfFrames = {
         toggleBtn.setAttribute("type", "button");
         toggleBtn.setAttribute("id", "tbtn");
         toggleBtn.setAttribute("onclick", "window.tfFrames.toggle();");
+        toggleBtn.setAttribute("tabindex", "1");
         toggleBtn.appendChild(document.createTextNode("Hide >"));
         this.toggleBtn = toggleBtn;
         body.appendChild(toggleBtn);
@@ -265,6 +282,7 @@ window.tfFrames = {
         testBtn.setAttribute("type", "button");
         testBtn.setAttribute("id", "tbtn");
         testBtn.setAttribute("onclick", "window.tfFrames.test();");
+        testBtn.setAttribute("tabindex", "2");
         testBtn.appendChild(document.createTextNode("Test >"));
         this.testBtn = testBtn;
         body.appendChild(testBtn);
@@ -283,6 +301,7 @@ window.tfFrames = {
         var nameInput = document.createElement("input");
         nameInput.setAttribute("type", "text");
         nameInput.setAttribute("id", "name");
+        nameInput.setAttribute("tabindex", "3");
         this.nameElement = nameInput;
         step0PElement.appendChild(nameInput);
         step0Element.appendChild(step0PElement);
@@ -290,10 +309,11 @@ window.tfFrames = {
         var step1Element = document.createElement("li");
         listElement.appendChild(step1Element);
         var step1PElement = document.createElement("p");
-        step1PElement.appendChild(document.createTextNode("Paste previously generated frame data into textarea below and "));
+        step1PElement.appendChild(document.createTextNode("(Optional) Paste previously generated frame data into textarea below and "));
         var loadBtn = document.createElement("button");
         loadBtn.setAttribute("type", "button");
         loadBtn.setAttribute("onclick", "window.tfFrames.loadFrames();");
+        loadBtn.setAttribute("tabindex", "4");
         loadBtn.appendChild(document.createTextNode("Load"));
         this.loadBtn = loadBtn;
         step1PElement.appendChild(loadBtn);
@@ -311,6 +331,7 @@ window.tfFrames = {
         number.setAttribute("name", "genFrames");
         number.setAttribute("value", "50");
         number.setAttribute("id", "frameCount");
+        number.setAttribute("tabindex", "5");
         this.frameCount = number;
         step2PElement.appendChild(number);
 
@@ -320,6 +341,7 @@ window.tfFrames = {
         clazz.setAttribute("type", "text");
         clazz.setAttribute("value", "");
         clazz.setAttribute("id", "frameClass");
+        clazz.setAttribute("tabindex", "6");
         this.frameClass = clazz;
         step2PElement.appendChild(clazz);
 
@@ -329,12 +351,14 @@ window.tfFrames = {
         fName.setAttribute("type", "text");
         fName.setAttribute("value", "");
         fName.setAttribute("id", "frameName");
+        fName.setAttribute("tabindex", "7");
         this.frameName = fName;
         step2PElement.appendChild(fName);
 
         var goBtn = document.createElement("button");
         goBtn.setAttribute("type", "button");
         goBtn.setAttribute("onclick", "window.tfFrames.generateFrames();");
+        goBtn.setAttribute("tabindex", "8");
         goBtn.appendChild(document.createTextNode("Go >"));
         this.goBtn = goBtn;
         step2PElement.appendChild(goBtn);
@@ -348,6 +372,7 @@ window.tfFrames = {
         var selectFrame = document.createElement("select");
         selectFrame.setAttribute("name", "frame");
         selectFrame.setAttribute("onchange", "window.tfFrames.changeSelectFrame();");
+        selectFrame.setAttribute("tabindex", "9");
         this.selectFrame = selectFrame;
         step3PElement.appendChild(selectFrame);
         step3PElement.appendChild(document.createTextNode(" frame and set style to "));
@@ -356,7 +381,8 @@ window.tfFrames = {
         frameStyle.setAttribute("value", "");
         frameStyle.setAttribute("id", "frameStyle");
         frameStyle.setAttribute("style", "width:500px;");
-        frameStyle.setAttribute("onblur", "window.tfFrames.setFrameStyle();");
+        frameStyle.setAttribute("onkeyup", "window.tfFrames.setFrameStyle();");
+        frameStyle.setAttribute("tabindex", "10");
         this.frameStyle = frameStyle;
         step3PElement.appendChild(frameStyle);
         var frameExposureCount = document.createElement("input");
@@ -364,6 +390,7 @@ window.tfFrames = {
         frameExposureCount.setAttribute("value", "1");
         frameExposureCount.setAttribute("id", "frameExposureCount");
         frameExposureCount.setAttribute("onblur", "window.tfFrames.setFrameExposureCount();");
+        frameExposureCount.setAttribute("tabindex", "11");
         this.exposureCount = frameExposureCount;
         step3PElement.appendChild(frameExposureCount);
         step3Element.appendChild(step3PElement);
@@ -394,6 +421,7 @@ window.tfFrames = {
         outputElement.setAttribute("rows", "10");
         outputElement.setAttribute("cols", "100");
         outputElement.setAttribute("id", "css");
+        outputElement.setAttribute("tabindex", "12");
         this.output = outputElement;
         form.appendChild(outputElement);
 

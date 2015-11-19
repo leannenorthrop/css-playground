@@ -47,6 +47,14 @@ form textarea {
   width:100%;
 }
 
+.ghost {
+  opacity: 0.27;
+}
+
+.opaque {
+  opacity: 1;
+}
+
 .box {
   position: absolute;
   top: 150px;
