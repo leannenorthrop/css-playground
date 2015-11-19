@@ -11,10 +11,10 @@
     <link rel="icon" href="{{site.url}}/images/favicon.ico">
 
     <title>CSS Playground</title>
-
     <link rel="stylesheet" type="text/css" href="http://leannenorthrop.github.io/stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="http://leannenorthrop.github.io/stylesheets/print.css" media="print">
-    <link class="codestyle" rel="stylesheet" href="http://leannenorthrop.github.io/stylesheets/monokai_sublime.css">
+    <link rel="stylesheet" type="text/css" href="http://leannenorthrop.github.io/stylesheets/font-awesome.min.css">
+
     <link rel="stylesheet" href="stylesheets/screen.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -25,16 +25,40 @@
   </head>
 
   <body>
-    <div class="blog-masthead">
-      <div class="container">
-        <nav class="blog-nav">
-          <a class="blog-nav-item" href="/">Home</a>
-          <a class="blog-nav-item" href="/blog">Blog</a>
-          <a class="blog-nav-item active" href="/css-playground">CSS Stuff</a>
-        </nav>
-      </div>
-    </div>
+    <h1 class="label" style="position: absolute; top: 40px;margin:0;padding:0 0 0 10px;color:black;">Gathering Understanding</h1>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-toolbar">
+            <span class="sr-only">View Menu</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="https://avatars0.githubusercontent.com/u/521090?v=3&s=460" width="30px" height="30px" class="img-circle" alt="Picture of Me, Leanne Northrop"></a>
+        </div>
 
+        <div class="collapse navbar-collapse" id="main-toolbar">
+          <ul class="nav navbar-nav">
+            
+            <li><a href="http://leannenorthrop.github.io/">Home<span class="sr-only">(current)</span></a></li>
+            
+
+            
+            <li><a href="http://leannenorthrop.github.io/blog">Development Blog</a></li>
+               
+
+            <li class="active"><a href="http://leannenorthrop.github.io/css-playground">CSS Stuff</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <ol class="breadcrumb">
+      <li><a href="http://leannenorthrop.github.io/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      <li>CSS Stuff</li>
+    </ol>
+  
     <div class="list-group ani-menu">
       <a class="list-group-item" src="24Frames.html">
         <h4 class="list-group-item-heading">24 Frames Helper</h4>
@@ -68,9 +92,7 @@
     <script src="http://leannenorthrop.github.io/javascripts/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://leannenorthrop.github.io/javascripts/ie10-viewport-bug-workaround.js"></script>
-    <script src="http://leannenorthrop.github.io/javascripts/highlight.pack.js"></script>
     <script>
-      hljs.initHighlightingOnLoad();
       $("a.list-group-item").click(function(event) {
         event.stopPropagation();
         $(".ani-stage").attr("src", $(this).attr("src"));
