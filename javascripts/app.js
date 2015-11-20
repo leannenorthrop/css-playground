@@ -86,6 +86,7 @@ window.tfFrames = {
         var animationName = frameName;
         var animationCount = 0;
         var keyframes = "@keyframes " + animationName + "_" + animationCount + " {\n";
+        var webKitKeyFrames = "@-webkit-keyframes " + animationName + "_" + animationCount + " {\n";
         var animations = animationName + "_" + animationCount + " 1s steps(1) 1 " + (animationCount) + "s normal, ";
         var last = 0;
         var stepCount = 1;
@@ -110,17 +111,21 @@ window.tfFrames = {
                     n = 100;
                 }
                 keyframes += "  " + last + "%," + n + "% {";
+                webKitKeyFrames += "  " +  n + "% {";
 
                 if (addComments) {
                     keyframes += "    /* frame " + (i+1) + " rules here */";
+                    webKitKeyFrames += "    /* frame " + (i+1) + " rules here */";
                 }
 
                 var styles = this.getStyle(frameCount,frameName);
                 if (styles != undefined) {
                     keyframes += styles;  
+                    webKitKeyFrames += styles;
                     frameData += frameClass + "|" + frameName + "|" + frameCount + "|" + frame.dataset.frameExposureCount + "|" + styles + "\n";  
                 } 
                 keyframes += "}\n";
+                webKitKeyFrames += "}\n";
 
                 // Next animation of 1s
                 animations += animationName + "_" + animationCount + " 1s steps(1) 1 " + (animationCount) + "s normal, ";
@@ -129,6 +134,8 @@ window.tfFrames = {
                 last = 0;
                 keyframes += "}\n\n";
                 keyframes += "@keyframes " + animationName + "_" + animationCount + " {\n";
+                webKitKeyFrames += "}\n\n";
+                webKitKeyFrames += "@-webkit-keyframes " + animationName + "_" + animationCount + " {\n";
             }
             
             var next = last + duration;
@@ -136,17 +143,21 @@ window.tfFrames = {
                 next = 100;
             }
             keyframes += "  " + last + "%," + next + "% {";
+            webKitKeyFrames += "  " + next + "% {";
 
             if (addComments) {
                 keyframes += "    /* frame " + (i+1) + " rules here */";
+                webKitKeyFrames += "    /* frame " + (i+1) + " rules here */";
             }
 
             var styles = this.getStyle(frameCount,frameName);
             if (styles != undefined) {
                 keyframes += styles;  
+                webKitKeyFrames += styles;
                 frameData += frameClass + "|" + frameName + "|" + frameCount + "|" + frame.dataset.frameExposureCount + "|" + styles + "\n";  
             } 
             keyframes += "}\n";
+            webKitKeyFrames += "}\n";
             last = next;
 
             stepCount++;
@@ -154,7 +165,8 @@ window.tfFrames = {
             i++;
         }
         keyframes += "}\n\n"; 
-        return {'animations': animations.substr(0, animations.length-2), 'keyframes': keyframes, 'frameData': frameData + "*/"};
+        webKitKeyFrames += "}\n\n"; 
+        return {'animations': animations.substr(0, animations.length-2), 'keyframes': keyframes, 'frameData': frameData + "*/", 'webKitKeyFrames':webKitKeyFrames};
     },
     generateKeyframes: function() {
         var css = this._keyFrames(true);
@@ -166,6 +178,7 @@ window.tfFrames = {
         outputElement.value = outputElement.value + "  animation-fill-mode: forwards;\n}\n\n";    
 
         outputElement.value = outputElement.value + css.keyframes;
+        outputElement.value = outputElement.value + css.webKitKeyFrames;
         outputElement.value = outputElement.value + css.frameData + "*/\n";
     },
     getStyle: function(frameNumber, name) {
@@ -372,10 +385,20 @@ window.tfFrames = {
 
         var css = this._keyFrames(false);
         console.log(css.keyframes);
-        var keyframes = css.keyframes.split("\n\n");
-        for (var i = 0; i < keyframes.length; i++) {
-            if (keyframes[i].length > 0) {
-                stylesheet.sheet.insertRule(keyframes[i], i);
+        console.log(css.webKitKeyFrames);
+        try {
+            var keyframes = css.keyframes.split("\n\n");
+            for (var i = 0; i < keyframes.length; i++) {
+                if (keyframes[i].length > 0) {
+                    stylesheet.sheet.insertRule(keyframes[i], i);
+                }
+            }
+        } catch(error) {
+            var wkeyframes = css.webKitKeyFrames.split("\n\n");
+            for (var i = 0; i < wkeyframes.length; i++) {
+                if (wkeyframes[i].length > 0) {
+                    stylesheet.sheet.insertRule(wkeyframes[i], i);
+                }
             }
         }
         
