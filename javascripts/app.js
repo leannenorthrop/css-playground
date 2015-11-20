@@ -4,11 +4,20 @@ window.tfFrames = {
         var data = outputElement.value;
         var lines = data.split("\n");
 
+        var validFramesCount = 0;
+        for (var i = 0; i < lines.length; i++) {
+            var parts = lines[i].split("|");
+            if (parts.length >= 5) {
+                validFramesCount++;
+            }
+        }
+
         var frameName = lines[0].split("|")[1];
         var frameClass = lines[0].split("|")[0];
-        this.frameCount.value = lines.length;
+        this.nameElement.value = frameName[frameName.length-1]=="_" ? frameName.substring(0,frameName.length-1) : frameName;
+        this.setAnimationName();
+        this.frameCount.value = validFramesCount;
         this.frameClass.value = frameClass;
-        this.frameName.value = frameName;
         this.generateFrames();
 
         for (var i = 0; i < lines.length; i++) {
@@ -77,7 +86,7 @@ window.tfFrames = {
         var animationName = frameName;
         var animationCount = 0;
         var keyframes = "@keyframes " + animationName + "_" + animationCount + " {\n";
-        var animations = animationName + "_" + animationCount + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
+        var animations = animationName + "_" + animationCount + " 1s steps(1) 1 " + (animationCount) + "s normal, ";
         var last = 0;
         var stepCount = 1;
         var frameData = "/* Frame Data: \n";
@@ -97,7 +106,7 @@ window.tfFrames = {
                 d--;
                 duration = duration - d;
                 var n = last + (d * 4.16);
-                if (n > 99) {
+                if (n > 98) {
                     n = 100;
                 }
                 keyframes += "  " + last + "%," + n + "% {";
@@ -109,12 +118,12 @@ window.tfFrames = {
                 var styles = this.getStyle(frameCount,frameName);
                 if (styles != undefined) {
                     keyframes += styles;  
-                    frameData += frameClass + "|" + frameName + "|" + frameCount + "|" + styles + "\n";  
+                    frameData += frameClass + "|" + frameName + "|" + frameCount + "|" + frame.dataset.frameExposureCount + "|" + styles + "\n";  
                 } 
                 keyframes += "}\n";
 
                 // Next animation of 1s
-                animations += animationName + "_" + animationCount + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
+                animations += animationName + "_" + animationCount + " 1s steps(1) 1 " + (animationCount) + "s normal, ";
                 animationCount++;
                 stepCount = 1;
                 last = 0;
@@ -123,7 +132,7 @@ window.tfFrames = {
             }
             
             var next = last + duration;
-            if (next > 99) {
+            if (next > 98 || i == (numberOfFrames-1)) {
                 next = 100;
             }
             keyframes += "  " + last + "%," + next + "% {";
@@ -176,8 +185,6 @@ window.tfFrames = {
         this.frameStyle.value = style;
         this.exposureCount.value = frame.dataset.frameExposureCount;
         
-
-        console.log(frame);
         return true;
     },
     setFrameStyle: function() {
@@ -186,14 +193,12 @@ window.tfFrames = {
         var style = frame.getAttribute("style");
         var frameStyle = this.frameStyle;
         frame.setAttribute("style", frameStyle.value);
-        console.log(frame);
         return true;
     },
     setFrameExposureCount: function() {
         var selectElement = this.selectFrame;
         var frame = this.getFrame(selectElement.value, selectElement.dataset.frameName);
         frame.dataset.frameExposureCount = this.exposureCount.value;
-        console.log(frame);
         return true;
     },
     toggle: function() {
@@ -260,6 +265,62 @@ window.tfFrames = {
         this.output.value +='</html>\n';
         return true;
     },
+    clearForm: function() {
+        this.nameElement.value = "";
+        this.selectFrame.innerHTML = "";
+        this.selectFrame.dataset.frameName = "";
+        while (this.framesDiv.children.length > 0) {
+            var f = this.framesDiv.children[0];
+            if (f != undefined) {
+                f.parentNode.removeChild(f);
+            }
+        }
+        this.frameClass.value = "";
+        this.frameStyle.value = "";
+        this.frameName.value = "";
+        this.frameName2.value = "";
+        this.exposureCount.value = "1";
+        this.frameCount.value = "50";
+        this.output.value = "";
+    },
+    reEdit: function() {
+        var selectedAni = this.selectAni.value;
+        var dataElement = document.getElementById(selectedAni+"FrameData");
+        if (dataElement != undefined) {
+            var data = dataElement.innerHTML.split("\n");
+            var frameData = data[2] + "\n";
+            var i = 3;
+            while(data[i] != "*/" && i < data.length-1) {
+                frameData += data[i++] + "\n";
+            }
+            console.log(frameData);
+            this.output.value = frameData;
+            this.loadFrames();
+            this.output.value = "";
+
+            // Remove elements
+            var span = document.getElementById(selectedAni);
+            if (span != undefined) {
+                span.parentNode.removeChild(span);
+            }
+            var style = document.getElementById(selectedAni+"Style");
+            if (style != undefined) {
+                style.parentNode.removeChild(style);
+            }
+            dataElement.parentNode.removeChild(dataElement);
+            var options = this.selectAni.children;
+            var found = undefined;
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].innerHTML==selectedAni){
+                    found = options[i];
+                    break;
+                }
+            }
+            if (found!=undefined) {
+                this.selectAni.removeChild(found);
+            }
+        }
+    },
     save: function() {
         this.testBtn.setAttribute("disabled","");
         this.keepBtn.setAttribute("disabled","");
@@ -278,22 +339,13 @@ window.tfFrames = {
             e1.setAttribute("id",aniName);
         }
 
-        this.nameElement.value = "";
-        this.selectFrame.innerHTML = "";
-        this.selectFrame.dataset.frameName = "";
-        while (this.framesDiv.children.length > 0) {
-            var f = this.framesDiv.children[0];
-            if (f != undefined) {
-                f.parentNode.removeChild(f);
-            }
-        }
-        this.frameClass.value = "";
-        this.frameStyle.value = "";
-        this.frameName.value = "";
-        this.frameName2.value = "";
-        this.exposureCount.value = "1";
-        this.frameCount.value = "50";
-        this.output.value = "";
+        var opt = document.createElement("option");
+        opt.setAttribute("value", aniName);
+        opt.appendChild(document.createTextNode(aniName));
+        this.selectAni.appendChild(opt);
+        reEditBtn.removeAttribute("disabled");
+
+        this.clearForm();
 
         var pre = document.createElement("pre");
         pre.setAttribute("id", aniName + "FrameData");
@@ -311,7 +363,7 @@ window.tfFrames = {
         var test = document.createElement("span");
         test.setAttribute("id", aniName+"Test");
         var body = this.body;
-        body.appendChild(test);
+        this.stageDiv.appendChild(test);
 
         var stylesheet = document.createElement("style");
         stylesheet.setAttribute("id", aniName + "StyleTest");
@@ -321,7 +373,6 @@ window.tfFrames = {
         var css = this._keyFrames(false);
         console.log(css.keyframes);
         var keyframes = css.keyframes.split("\n\n");
-        console.log(keyframes);
         for (var i = 0; i < keyframes.length; i++) {
             if (keyframes[i].length > 0) {
                 stylesheet.sheet.insertRule(keyframes[i], i);
@@ -383,6 +434,13 @@ window.tfFrames = {
             }
         }
     },
+    loadCSS: function() {
+        var stylesheet = document.createElement("style");
+        stylesheet.innerHTML = this.output.value;
+        this.body.appendChild(stylesheet);
+        this.output.value = "";
+        return true;
+    },
     init: function() {
         var tabindex = 1;
         var body = document.getElementsByTagName("body")[0];
@@ -442,6 +500,20 @@ window.tfFrames = {
 
         var listElement = document.createElement("ol");
 
+        var stepElement = document.createElement("li");
+        listElement.appendChild(stepElement);
+        var stepPElement = document.createElement("p");
+        stepPElement.appendChild(document.createTextNode("Enter any css into box below and "));
+        var loadCSSBtn = document.createElement("button");
+        loadCSSBtn.setAttribute("type", "button");
+        loadCSSBtn.setAttribute("id", "loadCSSBtn");
+        loadCSSBtn.setAttribute("tabindex", tabindex++);
+        loadCSSBtn.setAttribute("onclick", "window.tfFrames.loadCSS();");
+        loadCSSBtn.appendChild(document.createTextNode("Load CSS"));
+        this.loadCSSBtn = loadCSSBtn;
+        stepPElement.appendChild(loadCSSBtn);
+        stepElement.appendChild(stepPElement);
+
         var step0Element = document.createElement("li");
         listElement.appendChild(step0Element);
         var step0PElement = document.createElement("p");
@@ -468,6 +540,23 @@ window.tfFrames = {
         loadBtn.appendChild(document.createTextNode("Load"));
         this.loadBtn = loadBtn;
         step1PElement.appendChild(loadBtn);
+
+        step1PElement.appendChild(document.createTextNode(" OR select "));
+        var selectAni = document.createElement("select");
+        selectAni.setAttribute("name", "frame");
+        selectAni.setAttribute("tabindex", tabindex++);
+        this.selectAni = selectAni;
+        step1PElement.appendChild(selectAni);
+        var reEditBtn = document.createElement("button");
+        reEditBtn.setAttribute("type", "button");
+        reEditBtn.setAttribute("id", "reEditBtn");
+        reEditBtn.setAttribute("onclick", "window.tfFrames.reEdit();");
+        reEditBtn.setAttribute("disabled", "");
+        reEditBtn.setAttribute("tabindex", tabindex++);
+        reEditBtn.appendChild(document.createTextNode("Re-Edit"));
+        this.reEditBtn = reEditBtn;
+        step1PElement.appendChild(reEditBtn);
+
         step1Element.appendChild(step1PElement);
         
         var step2Element = document.createElement("li");
@@ -535,6 +624,7 @@ window.tfFrames = {
         frameStyle.setAttribute("tabindex", tabindex++);
         this.frameStyle = frameStyle;
         step3PElement.appendChild(frameStyle);
+        step3PElement.appendChild(document.createTextNode(" with exposure count of "));
         var frameExposureCount = document.createElement("input");
         frameExposureCount.setAttribute("type", "number");
         frameExposureCount.setAttribute("value", "1");
@@ -588,10 +678,15 @@ window.tfFrames = {
         this.output = outputElement;
         form.appendChild(outputElement);
 
+        var stageDiv = document.createElement("div");
+        stageDiv.setAttribute("id", "stage");
+        this.stageDiv = stageDiv;
+
         var framesDiv = document.createElement("div");
         framesDiv.setAttribute("class", "frames");
         this.framesDiv = framesDiv;
-        body.appendChild(framesDiv);
+        stageDiv.appendChild(framesDiv);
+        body.appendChild(stageDiv);
 
         this.toggle();
     } 
