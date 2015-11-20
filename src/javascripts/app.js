@@ -434,6 +434,13 @@ window.tfFrames = {
             }
         }
     },
+    loadCSS: function() {
+        var stylesheet = document.createElement("style");
+        stylesheet.innerHTML = this.output.value;
+        this.body.appendChild(stylesheet);
+        this.output.value = "";
+        return true;
+    },
     init: function() {
         var tabindex = 1;
         var body = document.getElementsByTagName("body")[0];
@@ -492,6 +499,20 @@ window.tfFrames = {
         this.form = form;
 
         var listElement = document.createElement("ol");
+
+        var stepElement = document.createElement("li");
+        listElement.appendChild(stepElement);
+        var stepPElement = document.createElement("p");
+        stepPElement.appendChild(document.createTextNode("Enter any css into box below and "));
+        var loadCSSBtn = document.createElement("button");
+        loadCSSBtn.setAttribute("type", "button");
+        loadCSSBtn.setAttribute("id", "loadCSSBtn");
+        loadCSSBtn.setAttribute("tabindex", tabindex++);
+        loadCSSBtn.setAttribute("onclick", "window.tfFrames.loadCSS();");
+        loadCSSBtn.appendChild(document.createTextNode("Load CSS"));
+        this.loadCSSBtn = loadCSSBtn;
+        stepPElement.appendChild(loadCSSBtn);
+        stepElement.appendChild(stepPElement);
 
         var step0Element = document.createElement("li");
         listElement.appendChild(step0Element);
