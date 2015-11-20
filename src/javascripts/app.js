@@ -77,7 +77,7 @@ window.tfFrames = {
         var animationName = frameName;
         var animationCount = 0;
         var keyframes = "@keyframes " + animationName + "_" + animationCount + " {\n";
-        var animations = animationName + "_" + animationCount + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
+        var animations = animationName + "_" + animationCount + " 1s steps(1) 1 " + (animationCount) + "s normal, ";
         var last = 0;
         var stepCount = 1;
         var frameData = "/* Frame Data: \n";
@@ -97,7 +97,7 @@ window.tfFrames = {
                 d--;
                 duration = duration - d;
                 var n = last + (d * 4.16);
-                if (n > 99) {
+                if (n > 98) {
                     n = 100;
                 }
                 keyframes += "  " + last + "%," + n + "% {";
@@ -114,7 +114,7 @@ window.tfFrames = {
                 keyframes += "}\n";
 
                 // Next animation of 1s
-                animations += animationName + "_" + animationCount + " 1s steps(24) 1 " + (animationCount) + "s normal, ";
+                animations += animationName + "_" + animationCount + " 1s steps(1) 1 " + (animationCount) + "s normal, ";
                 animationCount++;
                 stepCount = 1;
                 last = 0;
@@ -123,7 +123,7 @@ window.tfFrames = {
             }
             
             var next = last + duration;
-            if (next > 99) {
+            if (next > 98 || i == (numberOfFrames-1)) {
                 next = 100;
             }
             keyframes += "  " + last + "%," + next + "% {";
@@ -311,7 +311,7 @@ window.tfFrames = {
         var test = document.createElement("span");
         test.setAttribute("id", aniName+"Test");
         var body = this.body;
-        body.appendChild(test);
+        this.stageDiv.appendChild(test);
 
         var stylesheet = document.createElement("style");
         stylesheet.setAttribute("id", aniName + "StyleTest");
@@ -588,10 +588,15 @@ window.tfFrames = {
         this.output = outputElement;
         form.appendChild(outputElement);
 
+        var stageDiv = document.createElement("div");
+        stageDiv.setAttribute("id", "stage");
+        this.stageDiv = stageDiv;
+
         var framesDiv = document.createElement("div");
         framesDiv.setAttribute("class", "frames");
         this.framesDiv = framesDiv;
-        body.appendChild(framesDiv);
+        stageDiv.appendChild(framesDiv);
+        body.appendChild(stageDiv);
 
         this.toggle();
     } 
