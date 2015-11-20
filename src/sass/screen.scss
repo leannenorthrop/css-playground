@@ -1,17 +1,10 @@
 /* Your styles (and Sass) start here */
 
-.ani-menu {
-  postion: fixed;
-  display: inline-block;
-  left: 0;
-  width: 12%;  
-}
-
 .ani-stage {
-  position: fixed;
+  position: relative;
   display: inline-block;
-  left: 12%;
-  width: 88%;
-  height: 95%;
+  margin-left: 2.5%;
+  width: 95%;
+  min-height: 95%;
   border: 0px solid transparent;
 }

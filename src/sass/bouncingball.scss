@@ -1,6 +1,6 @@
 body img {
   position: fixed;
-  top: 315px;
+  top: 0px;
   left: -10px;
 }
 
@@ -35,139 +35,139 @@ body img {
 
 @keyframes helloa {
   0%,4.16% {
-    /* frame 1 rules here */ top: 450px; left: -30px; 
+    /* frame 1 rules here */ top: 150px; left: -30px; 
   }
   4.16%,8.32% {
-    /* frame 2 rules here */ top: 460px; left: -24px; 
+    /* frame 2 rules here */ top: 160px; left: -24px; 
   }
   8.32%,12.48% {
-    /* frame 3 rules here */ top: 470px; left: -19px; 
+    /* frame 3 rules here */ top: 170px; left: -19px; 
   }
   12.48%,16.64% {
-    /* frame 4 rules here */ top: 490px; left: -11px; 
+    /* frame 4 rules here */ top: 190px; left: -11px; 
   }
   16.64%,20.8% {
-    /* frame 5 rules here */ top: 560px; left: 13px; 
+    /* frame 5 rules here */ top: 260px; left: 13px; 
   }
   20.8%,24.96% {
-    /* frame 6 rules here */ top: 630px; left: 30px; 
+    /* frame 6 rules here */ top: 330px; left: 30px; 
   }
   24.96%,29.12% {
-    /* frame 7 rules here */ top: 700px; left: 46px; 
+    /* frame 7 rules here */ top: 400px; left: 46px; 
   }
   29.12%,33.28% {
-    /* frame 8 rules here */ top: 740px; left: 55px; 
+    /* frame 8 rules here */ top: 440px; left: 55px; 
   }
   33.28%,37.44% {
-    /* frame 9 rules here */ top: 742px; left: 68px; transform: rotateZ(90); 
+    /* frame 9 rules here */ top: 442px; left: 68px; transform: rotateZ(90); 
   }
   37.44%,41.6% {
-    /* frame 10 rules here */ top: 700px; left: 104px; transform: rotateZ(180deg);
+    /* frame 10 rules here */ top: 400px; left: 104px; transform: rotateZ(180deg);
   }
   41.6%,45.760000000000005% {
-    /* frame 11 rules here */ top: 643px; left: 150px; 
+    /* frame 11 rules here */ top: 343px; left: 150px; 
   }
   45.760000000000005%,49.92% {
-    /* frame 12 rules here */ top: 625px; left: 174px; 
+    /* frame 12 rules here */ top: 325px; left: 174px; 
   }
   49.92%,54.08% {
-    /* frame 13 rules here */ top: 620px; left: 185px; 
+    /* frame 13 rules here */ top: 320px; left: 185px; 
   }
   54.08%,58.24% {
-    /* frame 14 rules here */ top: 617px; left: 200px; 
+    /* frame 14 rules here */ top: 317px; left: 200px; 
   }
   58.24%,62.400000000000006% {
-    /* frame 15 rules here */ top: 625px; left: 218px; 
+    /* frame 15 rules here */ top: 325px; left: 218px; 
   }
   62.400000000000006%,66.56% {
-    /* frame 16 rules here */ top: 650px; left: 248px; 
+    /* frame 16 rules here */ top: 350px; left: 248px; 
   }
   66.56%,70.72% {
-    /* frame 17 rules here */ top: 710px; left: 285px; 
+    /* frame 17 rules here */ top: 410px; left: 285px; 
   }
   70.72%,74.88% {
-    /* frame 18 rules here */ top: 730px; left: 297px; transform: rotateZ(180deg); 
+    /* frame 18 rules here */ top: 430px; left: 297px; transform: rotateZ(180deg); 
   }
   74.88%,79.04% {
-    /* frame 19 rules here */ top: 740px; left: 310px; 
+    /* frame 19 rules here */ top: 440px; left: 310px; 
   }
   79.04%,83.2% {
-    /* frame 20 rules here */ top: 710px; left: 360px; 
+    /* frame 20 rules here */ top: 410px; left: 360px; 
   }
   83.2%,87.36% {
-    /* frame 21 rules here */ top: 690px; left: 403px; 
+    /* frame 21 rules here */ top: 390px; left: 403px; 
   }
   87.36%,91.52000000000001% {
-    /* frame 22 rules here */ top: 685px; left: 420px; 
+    /* frame 22 rules here */ top: 385px; left: 420px; 
   }
   91.52000000000001%,95.68% {
-    /* frame 23 rules here */ top: 682px; left: 440px; 
+    /* frame 23 rules here */ top: 382px; left: 440px; 
   }
   95.68%,100% {
-    /* frame 24 rules here */ top: 680px; left: 460px; 
+    /* frame 24 rules here */ top: 380px; left: 460px; 
   }
 }
 
 @keyframes hellob {
   0%,4.16% {
-    /* frame 25 rules here */ top: 682px; left: 480px; 
+    /* frame 25 rules here */ top: 382px; left: 480px; 
   }
   4.16%,8.32% {
-    /* frame 26 rules here */ top: 688px; left: 500px; 
+    /* frame 26 rules here */ top: 388px; left: 500px; 
   }
   8.32%,12.48% {
-    /* frame 27 rules here */ top: 700px; left: 525px; 
+    /* frame 27 rules here */ top: 400px; left: 525px; 
   }
   12.48%,16.64% {
-    /* frame 28 rules here */ top: 720px; left: 555px; 
+    /* frame 28 rules here */ top: 420px; left: 555px; 
   }
   16.64%,20.8% {
-    /* frame 29 rules here */ top: 740px; left: 578px;
+    /* frame 29 rules here */ top: 440px; left: 578px;
   }
   20.8%,24.96% {
-    /* frame 30 rules here */ top: 740px; left: 605px; 
+    /* frame 30 rules here */ top: 440px; left: 605px; 
   }
   24.96%,29.12% {
-    /* frame 31 rules here */ top: 730px; left: 630px; 
+    /* frame 31 rules here */ top: 430px; left: 630px; 
   }
   29.12%,33.28% {
-    /* frame 32 rules here */ top: 728px; left: 638px; 
+    /* frame 32 rules here */ top: 428px; left: 638px; 
   }
   33.28%,37.44% {
-    /* frame 33 rules here */ top: 724px; left: 644px; 
+    /* frame 33 rules here */ top: 424px; left: 644px; 
   }
   37.44%,41.6% {
-    /* frame 34 rules here */ top: 720px; left: 656px; 
+    /* frame 34 rules here */ top: 420px; left: 656px; 
   }
   41.6%,45.760000000000005% {
-    /* frame 35 rules here */ top: 718px; left: 670px; 
+    /* frame 35 rules here */ top: 418px; left: 670px; 
   }
   45.760000000000005%,49.92% {
-    /* frame 36 rules here */ top: 720px; left: 690px;
+    /* frame 36 rules here */ top: 420px; left: 690px;
   }
   49.92%,54.08% {
-    /* frame 37 rules here */ top: 728px; left: 710px;
+    /* frame 37 rules here */ top: 428px; left: 710px;
   }
   54.08%,58.24% {
-    /* frame 38 rules here */ top: 738px; left: 730px;
+    /* frame 38 rules here */ top: 438px; left: 730px;
   }
   58.24%,62.400000000000006% {
-    /* frame 39 rules here */ top: 738px; left: 770px;
+    /* frame 39 rules here */ top: 438px; left: 770px;
   }
   62.400000000000006%,66.56% {
-    /* frame 40 rules here */ top: 738px; left: 820px;
+    /* frame 40 rules here */ top: 438px; left: 820px;
   }
   66.56%,70.72% {
-    /* frame 41 rules here */ top: 738px; left: 860px;
+    /* frame 41 rules here */ top: 438px; left: 860px;
   }
   70.72%,74.88% {
-    /* frame 42 rules here */ top: 738px; left: 880px;
+    /* frame 42 rules here */ top: 438px; left: 880px;
   }
   74.88%,79.04% {
-    /* frame 43 rules here */ top: 738px; left: 890px;
+    /* frame 43 rules here */ top: 438px; left: 890px;
   }
   79.04%,100% {
-    /* frame 44 rules here */ top: 738px; left: 920px;
+    /* frame 44 rules here */ top: 438px; left: 920px;
   }
 
 }
