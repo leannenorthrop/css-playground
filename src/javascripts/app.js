@@ -118,7 +118,7 @@ window.tfFrames = {
                 var styles = this.getStyle(frameCount,frameName);
                 if (styles != undefined) {
                     keyframes += styles;  
-                    frameData += frameClass + "|" + frameName + "|" + frameCount + "|" + styles + "\n";  
+                    frameData += frameClass + "|" + frameName + "|" + frameCount + "|" + frame.dataset.frameExposureCount + "|" + styles + "\n";  
                 } 
                 keyframes += "}\n";
 
