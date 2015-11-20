@@ -54,32 +54,41 @@
       </div>
     </nav>
 
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" style="margin-bottom:0;">
       <li><a href="http://leannenorthrop.github.io/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
       <li>CSS Stuff</li>
     </ol>
   
-    <div class="list-group ani-menu">
-      <a class="list-group-item" src="24Frames.html">
-        <h4 class="list-group-item-heading">24 Frames Helper</h4>
-        <p class="list-group-item-text">Generate 24 fps keyframe data.</p>
+    <div id="pages" class="carousel slide" data-ride="carousel" data-interval="false" style="height:6em;">
+      <!--ol class="carousel-indicators">
+        <li data-target="#pages" data-slide-to="0" class="active"></li>
+        <li data-target="#pages" data-slide-to="1"></li>
+        <li data-target="#pages" data-slide-to="2"></li>
+      </ol-->
+
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        <div class="item active" style="text-align:center;">
+          <h5>24 Frames Helper</h5>
+          <p>Generate 24 fps keyframe data.</p>
+          <a class="option-item" src="24Frames.html">View</a>
+        </div>
+        <div class="item" style="text-align:center;">
+          <h5>Bouncing Ball</h5>
+          <p>Work in Progress</p>
+          <a class="option-item" src="bouncingBall.html">View</a>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <a class="left carousel-control" href="#pages" role="button" data-slide="prev" style="background:none;">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
       </a>
-      <a class="list-group-item" src="bouncingBall.html">
-        <h4 class="list-group-item-heading">Bouncing Ball</h4>
-        <p class="list-group-item-text">Work in Progress</p>
+      <a class="right carousel-control" href="#pages" role="button" data-slide="next" style="background:none;">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
       </a>
-      <!--a class="list-group-item active" src="play1.html">
-        <h4 class="list-group-item-heading">Welcome</h4>
-        <p class="list-group-item-text">...</p>
-      </a>
-      <a class="list-group-item" src="play2.html">
-        <h4 class="list-group-item-heading">Mani</h4>
-        <p class="list-group-item-text">Tibetan mantra with box shadows</p>
-      </a>
-      <a class="list-group-item" src="play3.html">
-        <h4 class="list-group-item-heading">Flexbox</h4>
-        <p class="list-group-item-text">Learning flexbox...</p>
-      </a-->      
     </div>
 
     <iframe class="ani-stage" src="24Frames.html">
@@ -93,11 +102,9 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://leannenorthrop.github.io/javascripts/ie10-viewport-bug-workaround.js"></script>
     <script>
-      $("a.list-group-item").click(function(event) {
+      $("a.option-item").click(function(event) {
         event.stopPropagation();
         $(".ani-stage").attr("src", $(this).attr("src"));
-        $("a.list-group-item").filter(".active").removeClass("active");
-        $(this).addClass("active");
       });
     </script>      
   </body>
